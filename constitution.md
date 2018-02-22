@@ -3,6 +3,7 @@
 We the Team Owners of the Gambling Addicts Anonymous, in Order to form a more perfect league, establish fairness, insure league tranquility, provide for the common enjoyment, promote the general entertainment, and secure the blessings of the fantasy Gods to ourselves and our posterity, do ordain and establish this Constitution for the Gambling Addicts Anonymous Fantasy Football League.
 
 # (B) League Composition
+
 1.  The Gambling Addicts Anonymous fantasy football league (hereinafter referred to as the GAA) shall be comprised of 10 team owners.
 1.  Each season, the Commissioner role shall be held by the previous season’s Commissioner unless otherwise remove from office by unanimous decision of team owners.
 1.  The Commissioner has the power to appoint one league manager (LM), whose powers include all those of the Commissioner, unless overridden by said Commissioner or majority vote of active league members and affirmed by the Commissioner.
@@ -11,7 +12,8 @@ We the Team Owners of the Gambling Addicts Anonymous, in Order to form a more pe
 1.  All interested team owners shall retain right to retain their spot in the GAA from season to season unless otherwise voted out by two-thirds supermajority of active league members.
 1.  If a member chooses to leave the league, they are not automatically guaranteed to gain their spot when and if they want to re-join
 
-# (C) League Fees    
+# (C) League Fees
+
 1.  All league fees must be submitted prior to the draft. Late submission will result in a 30% reduction in auction budget.
 1.  All league fees will be submitted to either the Commissioner or LM and held in liquid until completion of the season, where they will then be deposited into the Commissioner or LM’s personal banking account to be redistributed to winning team owners via the prefered peer-to-peer banking service of the recipient.
     1.  Under no circumstances will league fees be held in the personal accounts of the Commissioner or LM.
@@ -20,6 +22,7 @@ We the Team Owners of the Gambling Addicts Anonymous, in Order to form a more pe
 1.  League fees can be adjusted through unanimous decision of team owners
 
 # (D) Payout
+
 1.  Due fees will comprise the championship payout pool.
 1.  65% will be awarded to the winner of the championship match (1st place)
 1.  20% will be awarded to the loser of the championship match (2nd place)
@@ -27,6 +30,7 @@ We the Team Owners of the Gambling Addicts Anonymous, in Order to form a more pe
 1.  5% will be awarded to the team manager with the greatest number of regular season points, regardless of other payouts awarded.
 
 # (E) Rosters
+
 1.  Rosters are comprised of 16 players.
     1.  9 starters players.
         1.  Teams must start 1 quarterback (QB).
@@ -40,7 +44,8 @@ We the Team Owners of the Gambling Addicts Anonymous, in Order to form a more pe
     1.  Up to 7 benched players.
 1.  Rosters may have a maximum 4 QB, 8 RB, 8 WR, 3 TE, 3 D/ST, and 3 K.
 
-# (F) Scoring    
+# (F) Scoring
+
 1.  Teams will compete using head-to-head total points.
 1.  Passing
     1.  0.04 points will be awarded for each passing yard completed.
@@ -106,6 +111,7 @@ We the Team Owners of the Gambling Addicts Anonymous, in Order to form a more pe
     1.  Once locked, players may not be moved again until the next scoring period beginning on Tuesday at approximately 07:00 zulu time.
 
 # (G) Fair Play
+
 1.  One person can't control more than one team in the same league.
 2.  Collusive transactions are strictly forbidden. Collusion occurs when one team makes moves to benefit another team, without trying to improve its own position.
 3.  Certain transactions made solely to impede other owners are not allowed.
@@ -114,6 +120,7 @@ We the Team Owners of the Gambling Addicts Anonymous, in Order to form a more pe
 6.  The Commissioner may contact owners of teams that remain inactive for extended periods of time. The Commissioner will send notification to the email of record and send a message to the team owner via Facebook Messenger. Shortly thereafter, if the team remains inactive, the commissioner reserves the right to reassign ownership of the inactive team.
 
 # (H) Acquisitions and Waivers
+
 1.  The league will not observe the ESPN un-droppable list.
 1.  All NFL players are available to be rostered.
 1.  The league will use the waiver wire acquisition system.
@@ -125,7 +132,8 @@ We the Team Owners of the Gambling Addicts Anonymous, in Order to form a more pe
 1.  A player that is added to a team and released within 24 hours will remain a free agent.
 1.  A player who is dropped within 48 hours of a game start is not available to be added to a team roster, and will appear on waivers 8 hours after being placed on waivers.
 
-# (I)  Trading    
+# (I)  Trading
+
 1.  Trades are an agreement between two teams to exchange one or more players. Trades can be processed with an uneven number of players as long as they do not violate any roster settings or fair play rules.
 1.  There is no limit to the amount of trades a team owner can make.
 1.  Trades are allowed for the duration of the NFL season.
@@ -136,6 +144,7 @@ We the Team Owners of the Gambling Addicts Anonymous, in Order to form a more pe
     1.  Sufficient time and/or notice must be given to the entire league prior to an LM push, so that they might be able to voice concerns.
 
 # (J) Schedule    
+
 1.  The regular season will last for the first 12 weeks of the NFL season.
 1.  Matches will last for 1 week, from the first game on Thursday night, to the last game on Monday night.
 1.  The head-to-head schedule is randomly generated by ESPN at the beginning of each year.
@@ -166,6 +175,7 @@ We the Team Owners of the Gambling Addicts Anonymous, in Order to form a more pe
         1.  The loser will finish 10th overall, and be crowned “The Griz”.
 
 # (K) Drafting
+
 1.  The GAA shall draft using the auction method.
 1.  Each team starts with an imaginary auction budget of $200.
 1.  The draft nominating order shall be the final standings of the previous year.
