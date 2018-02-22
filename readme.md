@@ -13,6 +13,18 @@ This is the GitHub Repository for all Gambling Addicts Anonymous tools and data.
 * PEPE
 * ROWN
 
+## League Data, Code, Graphs
+
+* [constitution.md](constitution.md)
+* [scores.csv](scores.csv)
+* [draft.csv](draft.csv)
+* [undefeat_odds.R](undefeat_odds.R)
+* [matchup_graph.R](matchup_graph.R)
+![2017 Scores](/2017/scores.png)
+![2017 Wins](/2017/wins.png)
+
+
+
 ## League History
 ### 2017
 1. **NICK** (8-4, 983.9)
