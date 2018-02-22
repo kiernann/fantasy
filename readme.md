@@ -27,16 +27,16 @@ This is the GitHub Repository for all Gambling Addicts Anonymous tools and data.
 
 ## League History
 ### 2017
-1. **NICK** (8-4, 983.9)
-1. CART (7-5, 1008.1)
-1. KIER (9-3, 1068.2)
-1. ROWN (7-5, 1047.6)
-1. PEPE (5-8, 1097.7)
-1. KYLE (6-6, 1118.6)
-1. CHAR (3-9, 1268.9)
-1. COLN (6-6, 1071.6)
-1. BILL (5-7, 1110.4)
-1. AGUS (5-7, 1073.7)
+1. **NICK** (8-4, 983.9, [graph](nick.png))
+1. CART (7-5, 1008.1, [graph](cart.png))
+1. KIER (9-3, 1068.2, [graph](kier.png))
+1. ROWN (7-5, 1047.6, [graph](rown.png))
+1. PEPE (5-8, 1097.7, [graph](pepe.png))
+1. KYLE (6-6, 1118.6, [graph](kyle.png))
+1. CHAR (3-9, 1268.9, [graph](char.png))
+1. COLN (6-6, 1071.6, [graph](coln.png))
+1. BILL (5-7, 1110.4, [graph](bill.png))
+1. AGUS (5-7, 1073.7, [graph](agus.png))
 
 ### 2016
 1. **KIER** (8-5, 1299.7)
