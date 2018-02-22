@@ -1,0 +1,161 @@
+Pick,Player,Team,Position,Cost,Owner
+1,Tom Brady,NE,QB,28,LOVE
+2,Aaron Rodgers,GB,QB,25,BILL
+3,David Johnson,Ari,RB,67,CHAR
+4,LeSean McCoy,Buf,RB,56,KIER
+5,Eric Decker,Ten,WR,15,LOVE
+6,Leonard Fournette,Jax,RB,49,COLN
+7,Le'Veon Bell,Pit,RB,75,GUS
+8,A.J. Green,Cin,WR,53,NICK
+9,Devonta Freeman,Atl,RB,46,BILL
+10,Todd Gurley,LAR,RB,42,PEPE
+11,Kelvin Benjamin,Car,WR,17,COLN
+12,Rob Gronkowski,NE,TE,41,LOVE
+13,Jay Ajayi,Mia,RB,42,MOOD
+14,T.Y. Hilton,Ind,WR,39,GUS
+15,Antonio Brown,Pit,WR,66,MOOD
+16,Julio Jones,Atl,WR,63,NICK
+17,Marshawn Lynch,Oak,RB,25,COLN
+18,Ty Montgomery,GB,RB,23,NICK
+19,Brandin Cooks,NE,WR,35,COLN
+20,Odell Beckham Jr.,NYG,WR,61,BILL
+21,Stephen Gostkowski,NE,K,7,CHAR
+22,Jay Cutler,Mia,QB,4,KIER
+23,Matt Ryan,Atl,QB,15,NICK
+24,Melvin Gordon,LAC,RB,41,CHAR
+25,Jarvis Landry,Mia,WR,23,COLN
+26,Jordy Nelson,GB,WR,54,KIER
+27,Dalvin Cook,Min,RB,25,MOOD
+28,Jordan Reed,Wsh,TE,22,PEPE
+29,Isaiah Crowell,Cle,RB,18,PEPE
+30,Ezekiel Elliott,Dal,RB,34,BRUZ
+31,Tyreek Hill,KC,WR,9,BRUZ
+32,Mike Gillislee,NE,RB,9,GUS
+33,Michael Thomas,NO,WR,42,PEPE
+34,C.J. Anderson,Den,RB,8,NICK
+35,Jeremy Maclin,Bal,WR,4,CHAR
+36,Christian McCaffrey,Car,RB,21,BRUZ
+37,Mike Evans,TB,WR,49,PEPE
+38,Travis Kelce,KC,TE,15,KIER
+39,Allen Robinson,Jax,WR,8,NICK
+40,Carlos Hyde,SF,RB,11,BRUZ
+41,Jordan Howard,Chi,RB,31,BRUZ
+42,Demaryius Thomas,Den,WR,25,LOVE
+43,Lamar Miller,Hou,RB,37,BILL
+44,Eddie Lacy,Sea,RB,4,KIER
+45,Broncos,Den,D/ST,5,LOVE
+46,Jimmy Graham,Sea,TE,6,GUS
+47,Greg Olsen,Car,TE,11,CHAR
+48,Mark Ingram,NO,RB,6,NICK
+49,Jamison Crowder,Wsh,WR,5,BRUZ
+50,Drew Brees,NO,QB,16,BRUZ
+51,Sammy Watkins,LAR,WR,9,GUS
+52,DeMarco Murray,Ten,RB,40,KIER
+53,Amari Cooper,Oak,WR,24,BRUZ
+54,Kirk Cousins,Wsh,QB,5,COLN
+55,Alshon Jeffery,Phi,WR,19,LOVE
+56,LeGarrette Blount,Phi,RB,5,LOVE
+57,Stefon Diggs,Min,WR,9,CHAR
+58,Kareem Hunt,KC,RB,10,NICK
+59,DeVante Parker,Mia,WR,9,BRUZ
+60,Brandon Marshall,NYG,WR,12,MOOD
+61,Davante Adams,GB,WR,9,GUS
+62,Frank Gore,Ind,RB,3,PEPE
+63,Doug Baldwin,Sea,WR,26,LOVE
+64,Russell Wilson,Sea,QB,9,GUS
+65,DeAndre Hopkins,Hou,WR,18,MOOD
+66,Martellus Bennett,GB,TE,7,COLN
+67,Adrian Peterson,NO,RB,6,GUS
+68,Tyler Eifert,Cin,TE,5,NICK
+69,Keenan Allen,LAC,WR,15,BRUZ
+70,Dez Bryant,Dal,WR,16,KIER
+71,Terrelle Pryor Sr.,Wsh,WR,15,BILL
+72,Bilal Powell,NYJ,RB,9,GUS
+73,Michael Crabtree,Oak,WR,6,CHAR
+74,Cam Newton,Car,QB,7,LOVE
+75,Golden Tate,Det,WR,11,CHAR
+76,Joe Mixon,Cin,RB,6,LOVE
+77,Larry Fitzgerald,Ari,WR,10,LOVE
+78,Kyle Rudolph,Min,TE,4,MOOD
+79,Kendall Wright,Chi,WR,1,BRUZ
+80,Matthew Stafford,Det,QB,8,MOOD
+81,Emmanuel Sanders,Den,WR,11,BRUZ
+82,Danny Woodhead,Bal,RB,9,COLN
+83,Delanie Walker,Ten,TE,7,CHAR
+84,Pierre Garcon,SF,WR,3,CHAR
+85,Martavis Bryant,Pit,WR,10,COLN
+86,Theo Riddick,Det,RB,3,MOOD
+87,Doug Martin,TB,RB,8,LOVE
+88,Hunter Henry,LAC,TE,4,COLN
+89,Andrew Luck*,Ind,QB,4,CHAR
+90,Randall Cobb,GB,WR,8,GUS
+91,DeSean Jackson,TB,WR,3,MOOD
+92,Willie Snead,NO,WR,6,CHAR
+93,Seahawks,Sea,D/ST,8,MOOD
+94,Ameer Abdullah,Det,RB,3,CHAR
+95,Paul Perkins,NYG,RB,1,LOVE
+96,Tyrod Taylor,Buf,QB,3,COLN
+97,C.J. Prosise,Sea,RB,1,KIER
+98,Ben Roethlisberger,Pit,QB,4,CHAR
+99,Justin Tucker,Bal,K,4,MOOD
+100,Chiefs,KC,D/ST,5,CHAR
+101,Marcus Mariota,Ten,QB,1,PEPE
+102,Cardinals,Ari,D/ST,3,GUS
+103,Robert Kelley,Wsh,RB,3,CHAR
+104,Patriots,NE,D/ST,3,COLN
+105,Terrance West,Bal,RB,2,KIER
+106,Duke Johnson Jr.,Cle,RB,3,PEPE
+107,Mike Wallace,Bal,WR,2,PEPE
+108,Giants,NYG,D/ST,4,BRUZ
+109,Mike Nugent,NYG,K,3,BRUZ
+110,Dak Prescott,Dal,QB,3,NICK
+111,Marvin Jones,Det,WR,3,PEPE
+112,Donte Moncrief,Ind,WR,2,LOVE
+113,Dan Bailey,Dal,K,4,COLN
+114,Kenny Britt,Cle,WR,1,LOVE
+115,Tevin Coleman,Atl,RB,2,BILL
+116,Adam Thielen,Min,WR,2,PEPE
+117,Steelers,Pit,D/ST,1,NICK
+118,Zach Ertz,Phi,TE,1,BRUZ
+119,Eli Manning,NYG,QB,3,MOOD
+120,James White,NE,RB,2,BILL
+121,Matt Forte,NYJ,RB,2,BILL
+122,Texans,Hou,D/ST,4,COLN
+123,Matt Bryant,Atl,K,2,PEPE
+124,Darren McFadden,Dal,RB,1,COLN
+125,Tyrell Williams,LAC,WR,2,GUS
+126,Harrison Butker,Car,K,1,NICK
+127,Jameis Winston,TB,QB,5,BRUZ
+128,Jonathan Stewart,Car,RB,2,GUS
+129,Vikings,Min,D/ST,1,PEPE
+130,Adam Vinatieri,Ind,K,3,GUS
+131,Eagles,Phi,D/ST,4,GUS
+132,Matt Prater,Det,K,1,LOVE
+133,Rishard Matthews,Ten,WR,1,COLN
+134,Mason Crosby,GB,K,1,KIER
+135,Chris Hogan,NE,WR,3,GUS
+136,Darren Sproles,Phi,RB,1,MOOD
+137,Derek Carr,Oak,QB,1,PEPE
+138,Cairo Santos,KC,K,1,BILL
+139,Jaguars,Jax,D/ST,1,KIER
+140,Danny Amendola,NE,WR,2,PEPE
+141,Giovani Bernard,Cin,RB,2,PEPE
+142,O.J. Howard,TB,TE,1,BILL
+143,Philip Rivers,LAC,QB,1,KIER
+144,Sterling Shepard,NYG,WR,1,NICK
+145,Latavius Murray,Min,RB,2,KIER
+146,Deshaun Watson,Hou,QB,1,BILL
+147,Thomas Rawls,Sea,RB,1,KIER
+148,Torrey Smith,Phi,WR,1,NICK
+149,Jordan Matthews,Buf,WR,2,BILL
+150,Panthers,Car,D/ST,1,BILL
+151,Corey Coleman,Cle,WR,1,KIER
+152,Jason Witten,Dal,TE,1,NICK
+153,Dion Lewis,NE,RB,1,MOOD
+154,Mohamed Sanu,Atl,WR,1,BILL
+155,Zay Jones,Buf,WR,1,KIER
+156,Chris Boswell,Pit,K,1,NICK
+157,Malcolm Mitchell,NE,WR,2,BILL
+158,Jamaal Charles,Den,RB,1,BILL
+159,Rex Burkhead,NE,RB,1,MOOD
+160,Jacquizz Rodgers,TB,RB,1,MOOD
