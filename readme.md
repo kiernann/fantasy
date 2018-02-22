@@ -2,14 +2,14 @@
 This is the GitHub Repository for all Gambling Addicts Anonymous tools and data.
 
 ## Current teams
-* AGUS (Commisioner)
+* AGUS [Commisioner] (*Griz*)
 * BILL
 * CART
 * CHAR
 * COLN
-* KIER (League Manager)
+* KIER [League Manager]
 * KYLE
-* NICK (Champion)
+* NICK (*Champion*)
 * PEPE
 * ROWN
 
