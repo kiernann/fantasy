@@ -1,18 +1,24 @@
 library(tidyverse)
 library(rvest)
-seasons <- c("2015", "2016", "2017", "2018")
-team <- rep(NA, 9*length(seasons)*11*12)
-player <- rep(NA, 9*length(seasons)*11*12)
-points <- rep(NA, 9*length(seasons)*11*12)
-season <- rep(NA, 9*length(seasons)*11*12)
-week <- rep(NA, 9*length(seasons)*11*12)
+seasons  <- c("2015", "2016", "2017", "2018")
+team <- 
+  team <- 
+    player <- 
+      points <- 
+        season <- 
+          week <- rep(NA, 9 * length(seasons) * 11 * 12)
 start <- 1
 for (s in 1:length(seasons)) {
   year <- seasons[s]
   for (weeks in 1:12) {
     for (i in 1:11) {
       end <- start + 8
-      url <- str_glue("http://games.espn.com/ffl/boxscorequick?leagueId=252353&teamId=", i, "&scoringPeriodId=", weeks, "&seasonId=", year, "&view=scoringperiod&version=quick")
+      url <- paste0("http://games.espn.com/ffl/boxscorequick?leagueId=252353&teamId=", 
+                    i, 
+                    "&scoringPeriodId=", 
+                    weeks, "&seasonId=", 
+                    year, 
+                    "&view=scoringperiod&version=quick")
       file <- read_html(url)
       teams <- html_text(html_nodes(file, css = "div.teamInfoOwnerData"))
       if (length(teams) == 1) {
@@ -25,7 +31,7 @@ for (s in 1:length(seasons)) {
       point <- html_text(html_nodes(file, css = "td.playertableStat.appliedPoints"))
       for (a in 1:9) {
         player[start] <- players[a]
-        points[start] <- point[a+1]
+        points[start] <- point[a + 1]
         start <- start + 1
       }
     }
