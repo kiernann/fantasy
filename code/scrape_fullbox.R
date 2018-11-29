@@ -1,5 +1,8 @@
 library(tidyverse)
 library(rvest)
+
+# url function ------------------------------------------------------------
+
 fullbox_url <- function(league, team, period, season) {
   paste0("http://games.espn.com/ffl/boxscorefull?",
          "leagueId=",         league,
@@ -10,8 +13,9 @@ fullbox_url <- function(league, team, period, season) {
          "&version=",         "full")
 }
 
+# scrape 2018 fullbox -----------------------------------------------------
 
-scrape_fullbox <- function(espn_url) {
+scrape_fullbox18 <- function(espn_url) {
   offense <-
     read_html(espn_url) %>%
     html_nodes(css  = "#playertable_0") %>%
@@ -132,24 +136,188 @@ scrape_fullbox <- function(espn_url) {
              into = c("team", "role"),
              sep = "\\s")
   return(bind_rows(offense, kicking, defense, bench) %>%
-           select(slot, player, team, role, points))
+           select(slot, player, team, role, points, owner))
 }
 
-scrape_fullbox(espn_url = fullbox_url(league = 252353,
-                                      team   = 1,
-                                      period = 1,
-                                      season = 2018))
+# loop 2018 box scores ----------------------------------------------------
 
 empty <- rep(list(rep(list(NA), 10)), 12)
 
 for (p in 1:12) {
   for (t in c(1:11)[-7]) {
     empty[[p]][[t]] <-
-      scrape_fullbox(espn_url = fullbox_url(league = 252353,
-                                            team   = t,
-                                            period = p,
-                                            season = 2018)) %>%
+      scrape_fullbox18(espn_url = fullbox_url(league = 252353,
+                                              team   = t,
+                                              period = p,
+                                              season = 2018)) %>%
       mutate(season = as.character(2018),
              period = as.character(p))
   }
 }
+
+# combine 2018 box scores -------------------------------------------------
+
+bind_list <- rep(list(NA), 11)
+for (i in c(1:11)[-7]) {
+  bind_list[[i]] <- lapply(empty, "[[", i) %>% bind_rows
+}
+bind_list <- bind_list[-7]
+all2018 <- bind_rows(bind_list)
+
+# scrape 2017 fullbox -----------------------------------------------------
+
+scrape_fullbox17 <- function(espn_url) {
+  
+  offense <- 
+    read_html(espn_url) %>%
+    html_nodes(css  = "#playertable_0") %>%
+    html_table(fill = TRUE) %>%
+    as.data.frame() %>%
+    as_tibble() %>%
+    slice(4:n()) %>%
+    rename(slot = X1,
+           player = X2,
+           pass_made = X4,
+           pass_yds = X5,
+           pass_td = X6,
+           pass_int = X7,
+           rush_atempt = X9,
+           rush_yds = X10,
+           rush_td = X11,
+           recv_made = X13,
+           recv_yds = X14,
+           recv_td = X15,
+           recv_target = X16,
+           fumble = X19,
+           misc_td = X20,
+           points = X22) %>%
+    select(-starts_with("X")) %>%
+    mutate(owner  =
+             read_html(espn_url) %>%
+             html_node(css = "div.teamInfoOwnerData") %>%
+             html_text() %>%
+             word(1) %>%
+             tolower(),
+           points = as.numeric(points)) %>%
+    separate(col = player,
+             into = c("player", "team"),
+             sep = ", ") %>%
+    separate(col = team,
+             into = c("team", "role"),
+             sep = "\\s")
+  kicking <-
+    read_html(espn_url) %>%
+    html_node("#playertable_1") %>%
+    html_table(fill = TRUE) %>%
+    as.data.frame() %>%
+    as_tibble() %>%
+    slice(4:n()) %>%
+    rename(slot = X1,
+           player = X2,
+           kick_long = X6,
+           kick_total = X7,
+           kick_extra = X8,
+           points = X10) %>%
+    select(-starts_with("X")) %>%
+    mutate(owner  =
+             read_html(espn_url) %>%
+             html_node(css = "div.teamInfoOwnerData") %>%
+             html_text() %>%
+             word(1) %>%
+             tolower(),
+           points = as.numeric(points)) %>%
+    separate(col = player,
+             into = c("player", "team"),
+             sep = ", ") %>%
+    separate(col = team,
+             into = c("team", "role"),
+             sep = "\\s")
+  
+  defense <-
+    read_html(espn_url) %>%
+    html_node("#playertable_2") %>%
+    html_table(fill = TRUE) %>%
+    as.data.frame() %>%
+    as_tibble() %>%
+    slice(4:n()) %>%
+    rename(slot = X1,
+           player = X2,
+           dst_td = X4,
+           dst_int = X5,
+           dst_sack = X7,
+           dst_safe = X8,
+           dst_block = X9,
+           dst_allow = X10,
+           points = X12) %>%
+    select(-starts_with("X")) %>%
+    mutate(owner  =
+             read_html(espn_url) %>%
+             html_node(css = "div.teamInfoOwnerData") %>%
+             html_text() %>%
+             word(1) %>%
+             tolower(),
+           points = as.numeric(points)) %>%
+    separate(col = player,
+             into = c("player", "role"),
+             sep = "\\s")
+  
+  bench <-
+    read_html(espn_url) %>%
+    html_node("#playertable_3") %>%
+    html_table(fill = TRUE) %>%
+    as.data.frame() %>%
+    as_tibble() %>%
+    slice(4:n()) %>%
+    rename(slot = X1,
+           player = X2,
+           points = X22) %>%
+    select(-starts_with("X")) %>%
+    mutate(owner  =
+             read_html(espn_url) %>%
+             html_node(css = "div.teamInfoOwnerData") %>%
+             html_text() %>%
+             word(1) %>%
+             tolower(),
+           points = as.numeric(points),
+           slot = "BE") %>%
+    separate(col = player,
+             into = c("player", "team"),
+             sep = ", ") %>%
+    separate(col = team,
+             into = c("team", "role"),
+             sep = "\\s")
+  
+  return(bind_rows(offense, kicking, defense, bench) %>%
+           select(slot, player, team, role, points, owner))
+  
+}
+
+# loop 2017 box scores ----------------------------------------------------
+
+empty <- rep(list(rep(list(NA), 10)), 12)
+
+for (p in 1:12) {
+  for (t in c(1:11)[-7]) {
+    empty[[p]][[t]] <-
+      scrape_fullbox17(espn_url = fullbox_url(league = 252353,
+                                              team   = t,
+                                              period = p,
+                                              season = 2017)) %>%
+      mutate(season = as.character(2017),
+             period = as.character(p))
+  }
+}
+
+# combine 2017 box scores -------------------------------------------------
+
+bind_list <- rep(list(NA), 11)
+for (i in c(1:11)[-7]) {
+  bind_list[[i]] <- lapply(empty, "[[", i) %>% bind_rows
+}
+bind_list <- bind_list[-7]
+all2017 <- bind_rows(bind_list)
+
+# combine all scores ------------------------------------------------------
+
+all <- bind_rows(all2017, all2018)
+
