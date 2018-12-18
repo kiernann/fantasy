@@ -16,9 +16,9 @@ fullbox_url <- function(league, team, period, season) {
 # scrape 2018 fullbox -----------------------------------------------------
 
 scrape_fullbox18 <- function(espn_url) {
-  
+  espn_html <- read_html(espn_url)
   offense18 <-
-    read_html(espn_url) %>%
+    espn_html %>%
     html_nodes(css  = "#playertable_0") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
@@ -55,7 +55,7 @@ scrape_fullbox18 <- function(espn_url) {
              into = c("team", "role"),
              sep = "\\s")
   kicker18 <-
-    read_html(espn_url) %>%
+    espn_html %>%
     html_node("#playertable_1") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
@@ -83,7 +83,7 @@ scrape_fullbox18 <- function(espn_url) {
              sep = "\\s")
   
   defense18 <-
-    read_html(espn_url) %>%
+    espn_html %>%
     html_node("#playertable_2") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
@@ -111,7 +111,7 @@ scrape_fullbox18 <- function(espn_url) {
              sep = "\\s")
   
   bench18 <-
-    read_html(espn_url) %>%
+    espn_html %>%
     html_node("#playertable_3") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
@@ -170,9 +170,9 @@ all18 <- bind_rows(bind_list18)
 # scrape 2017 fullbox -----------------------------------------------------
 
 scrape_fullbox17 <- function(espn_url) {
-  
+  espn_url <- read_html(espn_url)
   offense17 <- 
-    read_html(espn_url) %>%
+    espn_url %>%
     html_nodes(css  = "#playertable_0") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
@@ -209,7 +209,7 @@ scrape_fullbox17 <- function(espn_url) {
              into = c("team", "role"),
              sep = "\\s")
   kicker17 <-
-    read_html(espn_url) %>%
+    espn_url %>%
     html_node("#playertable_1") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
@@ -237,7 +237,7 @@ scrape_fullbox17 <- function(espn_url) {
              sep = "\\s")
   
   defense17 <-
-    read_html(espn_url) %>%
+    espn_url %>%
     html_node("#playertable_2") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
@@ -265,7 +265,7 @@ scrape_fullbox17 <- function(espn_url) {
              sep = "\\s")
   
   bench17 <-
-    read_html(espn_url) %>%
+    espn_url %>%
     html_node("#playertable_3") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
