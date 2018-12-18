@@ -60,14 +60,14 @@ scrape_fullbox18 <- function(espn_url) {
            points = as.numeric(points)) %>%
     
     # Seperate player string into name and team
-    separate(col = player,
+    separate(col  = player,
              into = c("player", "team"),
-             sep = ", ") %>%
+             sep  = ", ") %>%
     
     # Seperate team string into NFL team and field position
-    separate(col = team,
+    separate(col  = team,
              into = c("team", "role"),
-             sep = "\\s")
+             sep  = "\\s")
   
   # Scrape starting kicker
   kicker18 <-
@@ -91,12 +91,12 @@ scrape_fullbox18 <- function(espn_url) {
              word(1) %>%
              tolower(),
            points = as.numeric(points)) %>%
-    separate(col = player,
+    separate(col  = player,
              into = c("player", "team"),
-             sep = ", ") %>%
-    separate(col = team,
+             sep  = ", ") %>%
+    separate(col  = team,
              into = c("team", "role"),
-             sep = "\\s")
+             sep  = "\\s")
   
   # Scrape starting defense
   defense18 <-
@@ -114,9 +114,9 @@ scrape_fullbox18 <- function(espn_url) {
            dst_safe  = X10,
            dst_block = X11,
            dst_allow = X12,
-           points = X14) %>%
+           points    = X14) %>%
     select(-starts_with("X")) %>%
-    mutate(owner  =
+    mutate(owner =
              espn_html %>%
              html_node(css = "div.teamInfoOwnerData") %>%
              html_text() %>%
@@ -258,7 +258,7 @@ scrape_fullbox17 <- function(espn_url) {
            kick_long  = X6,
            kick_total = X7,
            kick_extra = X8,
-           points = X10) %>%
+           points     = X10) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
              espn_html %>%
@@ -291,7 +291,7 @@ scrape_fullbox17 <- function(espn_url) {
            dst_allow = X10,
            points    = X12) %>%
     select(-starts_with("X")) %>%
-    mutate(owner  =
+    mutate(owner =
              espn_html %>%
              html_node(css = "div.teamInfoOwnerData") %>%
              html_text() %>%
@@ -369,17 +369,17 @@ all <-
 
 # Seperate fractional values into two variables
 all <- all %>% 
-  separate(col = pass_made, 
+  separate(col  = pass_made, 
            into = c("pass_comp", "pass_attempt"),
-           sep = "/") %>% 
-  separate(col = kick_long, 
+           sep  = "/") %>% 
+  separate(col  = kick_long, 
            into = c("kick_long_made", "kick_long_attempt"),
-           sep = "/") %>% 
-  separate(col = kick_total, 
+           sep  = "/") %>% 
+  separate(col  = kick_total, 
            into = c("kick_made", "kick_attempt"),
-           sep = "/") %>% 
-  separate(col = kick_extra, 
+           sep  = "/") %>% 
+  separate(col  = kick_extra, 
            into = c("kick_pat", "kick_pat_attempt"),
-           sep = "/")
+           sep  = "/")
 
 print(Sys.time() - start_time)
