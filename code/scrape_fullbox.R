@@ -24,22 +24,22 @@ scrape_fullbox18 <- function(espn_url) {
     as.data.frame() %>%
     as_tibble() %>%
     slice(4:n()) %>%
-    rename(slot = X1,
-           player = X2,
-           pass_made = X6,
-           pass_yds = X7,
-           pass_td = X8,
-           pass_int = X9,
+    rename(slot        = X1,
+           player      = X2,
+           pass_made   = X6,
+           pass_yds    = X7,
+           pass_td     = X8,
+           pass_int    = X9,
            rush_atempt = X11,
-           rush_yds = X12,
-           rush_td = X13,
-           recv_made = X15,
-           recv_yds = X16,
-           recv_td = X17,
+           rush_yds    = X12,
+           rush_td     = X13,
+           recv_made   = X15,
+           recv_yds    = X16,
+           recv_td     = X17,
            recv_target = X18,
-           fumble = X21,
-           misc_td = X22,
-           points = X24) %>%
+           fumble      = X21,
+           misc_td     = X22,
+           points      = X24) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
              read_html(espn_url) %>%
@@ -61,9 +61,9 @@ scrape_fullbox18 <- function(espn_url) {
     as.data.frame() %>%
     as_tibble() %>%
     slice(4:n()) %>%
-    rename(slot = X1,
-           player = X2,
-           kick_long = X8,
+    rename(slot       = X1,
+           player     = X2,
+           kick_long  = X8,
            kick_total = X9,
            kick_extra = X10,
            points = X12) %>%
@@ -89,12 +89,12 @@ scrape_fullbox18 <- function(espn_url) {
     as.data.frame() %>%
     as_tibble() %>%
     slice(4:n()) %>%
-    rename(slot = X1,
-           player = X2,
-           dst_td = X6,
-           dst_int = X7,
-           dst_sack = X9,
-           dst_safe = X10,
+    rename(slot      = X1,
+           player    = X2,
+           dst_td    = X6,
+           dst_int   = X7,
+           dst_sack  = X9,
+           dst_safe  = X10,
            dst_block = X11,
            dst_allow = X12,
            points = X14) %>%
@@ -128,13 +128,13 @@ scrape_fullbox18 <- function(espn_url) {
              word(1) %>%
              tolower(),
            points = as.numeric(points),
-           slot = "BE") %>%
-    separate(col = player,
+           slot   = "BE") %>%
+    separate(col  = player,
              into = c("player", "team"),
-             sep = ", ") %>%
-    separate(col = team,
+             sep  = ", ") %>%
+    separate(col  = team,
              into = c("team", "role"),
-             sep = "\\s")
+             sep  = "\\s")
   
   return(bind_rows(offense18,
                    kicker18,
@@ -178,22 +178,22 @@ scrape_fullbox17 <- function(espn_url) {
     as.data.frame() %>%
     as_tibble() %>%
     slice(4:n()) %>%
-    rename(slot = X1,
-           player = X2,
-           pass_made = X4,
-           pass_yds = X5,
-           pass_td = X6,
-           pass_int = X7,
+    rename(slot        = X1,
+           player      = X2,
+           pass_made   = X4,
+           pass_yds    = X5,
+           pass_td     = X6,
+           pass_int    = X7,
            rush_atempt = X9,
-           rush_yds = X10,
-           rush_td = X11,
-           recv_made = X13,
-           recv_yds = X14,
-           recv_td = X15,
+           rush_yds    = X10,
+           rush_td     = X11,
+           recv_made   = X13,
+           recv_yds    = X14,
+           recv_td     = X15,
            recv_target = X16,
-           fumble = X19,
-           misc_td = X20,
-           points = X22) %>%
+           fumble      = X19,
+           misc_td     = X20,
+           points      = X22) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
              read_html(espn_url) %>%
@@ -202,12 +202,12 @@ scrape_fullbox17 <- function(espn_url) {
              word(1) %>%
              tolower(),
            points = as.numeric(points)) %>%
-    separate(col = player,
+    separate(col  = player,
              into = c("player", "team"),
-             sep = ", ") %>%
-    separate(col = team,
+             sep  = ", ") %>%
+    separate(col  = team,
              into = c("team", "role"),
-             sep = "\\s")
+             sep  = "\\s")
   kicker17 <-
     espn_html %>%
     html_node("#playertable_1") %>%
@@ -215,9 +215,9 @@ scrape_fullbox17 <- function(espn_url) {
     as.data.frame() %>%
     as_tibble() %>%
     slice(4:n()) %>%
-    rename(slot = X1,
-           player = X2,
-           kick_long = X6,
+    rename(slot       = X1,
+           player     = X2,
+           kick_long  = X6,
            kick_total = X7,
            kick_extra = X8,
            points = X10) %>%
@@ -229,12 +229,12 @@ scrape_fullbox17 <- function(espn_url) {
              word(1) %>%
              tolower(),
            points = as.numeric(points)) %>%
-    separate(col = player,
+    separate(col  = player,
              into = c("player", "team"),
-             sep = ", ") %>%
-    separate(col = team,
+             sep  = ", ") %>%
+    separate(col  = team,
              into = c("team", "role"),
-             sep = "\\s")
+             sep  = "\\s")
   
   defense17 <-
     espn_html %>%
@@ -243,15 +243,15 @@ scrape_fullbox17 <- function(espn_url) {
     as.data.frame() %>%
     as_tibble() %>%
     slice(4:n()) %>%
-    rename(slot = X1,
-           player = X2,
-           dst_td = X4,
-           dst_int = X5,
-           dst_sack = X7,
-           dst_safe = X8,
+    rename(slot      = X1,
+           player    = X2,
+           dst_td    = X4,
+           dst_int   = X5,
+           dst_sack  = X7,
+           dst_safe  = X8,
            dst_block = X9,
            dst_allow = X10,
-           points = X12) %>%
+           points    = X12) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
              read_html(espn_url) %>%
@@ -260,9 +260,9 @@ scrape_fullbox17 <- function(espn_url) {
              word(1) %>%
              tolower(),
            points = as.numeric(points)) %>%
-    separate(col = player,
+    separate(col  = player,
              into = c("player", "role"),
-             sep = "\\s")
+             sep  = "\\s")
   
   bench17 <-
     espn_html %>%
@@ -271,7 +271,7 @@ scrape_fullbox17 <- function(espn_url) {
     as.data.frame() %>%
     as_tibble() %>%
     slice(4:n()) %>%
-    rename(slot = X1,
+    rename(slot   = X1,
            player = X2,
            points = X22) %>%
     select(-starts_with("X")) %>%
@@ -282,13 +282,13 @@ scrape_fullbox17 <- function(espn_url) {
              word(1) %>%
              tolower(),
            points = as.numeric(points),
-           slot = "BE") %>%
-    separate(col = player,
+           slot   = "BE") %>%
+    separate(col  = player,
              into = c("player", "team"),
-             sep = ", ") %>%
-    separate(col = team,
+             sep  = ", ") %>%
+    separate(col  = team,
              into = c("team", "role"),
-             sep = "\\s")
+             sep  = "\\s")
   
   return(bind_rows(offense17,
                    kicker17,
@@ -324,5 +324,7 @@ all17 <- bind_rows(bind_list17)
 
 # combine all scores ------------------------------------------------------
 
-all <- bind_rows(all17, all18)
+all <- 
+  bind_rows(all17, all18) %>% 
+  select(season, period, owner, everything())
 print(Sys.time() - start_time)
