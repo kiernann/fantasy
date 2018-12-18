@@ -42,7 +42,7 @@ scrape_fullbox18 <- function(espn_url) {
            points      = X24) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
-             read_html(espn_url) %>%
+             espn_html %>%
              html_node(css = "div.teamInfoOwnerData") %>%
              html_text() %>%
              word(1) %>%
@@ -69,7 +69,7 @@ scrape_fullbox18 <- function(espn_url) {
            points = X12) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
-             read_html(espn_url) %>%
+             espn_html %>%
              html_node(css = "div.teamInfoOwnerData") %>%
              html_text() %>%
              word(1) %>%
@@ -100,7 +100,7 @@ scrape_fullbox18 <- function(espn_url) {
            points = X14) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
-             read_html(espn_url) %>%
+             espn_html %>%
              html_node(css = "div.teamInfoOwnerData") %>%
              html_text() %>%
              word(1) %>%
@@ -122,7 +122,7 @@ scrape_fullbox18 <- function(espn_url) {
            points = X24) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
-             read_html(espn_url) %>%
+             espn_html %>%
              html_node(css = "div.teamInfoOwnerData") %>%
              html_text() %>%
              word(1) %>%
@@ -196,7 +196,7 @@ scrape_fullbox17 <- function(espn_url) {
            points      = X22) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
-             read_html(espn_url) %>%
+             espn_html %>%
              html_node(css = "div.teamInfoOwnerData") %>%
              html_text() %>%
              word(1) %>%
@@ -223,7 +223,7 @@ scrape_fullbox17 <- function(espn_url) {
            points = X10) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
-             read_html(espn_url) %>%
+             espn_html %>%
              html_node(css = "div.teamInfoOwnerData") %>%
              html_text() %>%
              word(1) %>%
@@ -254,7 +254,7 @@ scrape_fullbox17 <- function(espn_url) {
            points    = X12) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
-             read_html(espn_url) %>%
+             espn_html %>%
              html_node(css = "div.teamInfoOwnerData") %>%
              html_text() %>%
              word(1) %>%
@@ -276,7 +276,7 @@ scrape_fullbox17 <- function(espn_url) {
            points = X22) %>%
     select(-starts_with("X")) %>%
     mutate(owner  =
-             read_html(espn_url) %>%
+             espn_html %>%
              html_node(css = "div.teamInfoOwnerData") %>%
              html_text() %>%
              word(1) %>%
