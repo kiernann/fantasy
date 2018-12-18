@@ -1,6 +1,6 @@
 library(tidyverse)
 library(rvest)
-
+start_time <- Sys.time()
 # url function ------------------------------------------------------------
 
 fullbox_url <- function(league, team, period, season) {
@@ -150,10 +150,10 @@ for (p in 1:12) {
   for (t in c(1:11)[-7]) {
     empty18[[p]][[t]] <-
       scrape_fullbox18(espn_url = fullbox_url(league = 252353,
-                                                team   = t,
-                                                period = p,
-                                                season = 2018)) %>% 
-      mutate(season = as.character(2017),
+                                              team   = t,
+                                              period = p,
+                                              season = 2018)) %>% 
+      mutate(season = as.character(2018),
              period = as.character(p))
   }
 }
@@ -170,9 +170,9 @@ all18 <- bind_rows(bind_list18)
 # scrape 2017 fullbox -----------------------------------------------------
 
 scrape_fullbox17 <- function(espn_url) {
-  espn_url <- read_html(espn_url)
+  espn_html <- read_html(espn_url)
   offense17 <- 
-    espn_url %>%
+    espn_html %>%
     html_nodes(css  = "#playertable_0") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
@@ -209,7 +209,7 @@ scrape_fullbox17 <- function(espn_url) {
              into = c("team", "role"),
              sep = "\\s")
   kicker17 <-
-    espn_url %>%
+    espn_html %>%
     html_node("#playertable_1") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
@@ -237,7 +237,7 @@ scrape_fullbox17 <- function(espn_url) {
              sep = "\\s")
   
   defense17 <-
-    espn_url %>%
+    espn_html %>%
     html_node("#playertable_2") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
@@ -265,7 +265,7 @@ scrape_fullbox17 <- function(espn_url) {
              sep = "\\s")
   
   bench17 <-
-    espn_url %>%
+    espn_html %>%
     html_node("#playertable_3") %>%
     html_table(fill = TRUE) %>%
     as.data.frame() %>%
@@ -324,4 +324,5 @@ all17 <- bind_rows(bind_list17)
 
 # combine all scores ------------------------------------------------------
 
-all <- bind_rows(all2017, all2018)
+all <- bind_rows(all17, all18)
+print(Sys.time() - start_time)
