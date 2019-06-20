@@ -1,5 +1,5 @@
 # GAA
-This is the GitHub Repository for all Gambling Addicts Anonymous tools and data.
+This is the GitHub Repository for all GAA tools and data.
 
 ## Current teams
 * AGUS [Commisioner] *(Griz)*
