@@ -8,7 +8,7 @@ and data.
 
 ## Current teams
 
-  - AGUS \[Commisioner\] *(Griz)*
+  - AGUS \[Commisioner\]
   - BILL
   - CART
   - KIER \[League Manager\]
@@ -16,6 +16,10 @@ and data.
   - NICK *(Champion)*
   - PEPE
   - CORY
+  - ~~COLN~~
+  - ~~GRIZ~~
+  - ~~CHAR~~
+  - ~~ROWN~~ *(Griz)*
 
 ## League Data, Code, Graphs
 
@@ -26,6 +30,19 @@ and data.
   - [matchup\_graph.R](matchup_graph.R)
 
 ## League History
+
+### 2018
+
+1.  NICK (8-4, 1191.3)
+2.  BILL (10-2, 1584.4)
+3.  KIER (9-3, 1161.9)
+4.  CHAR (8-4, 1086.3)
+5.  PEPE (5-7, 1154.4)
+6.  CART (5-5, 1221.9)
+7.  AGUS (5-7, 1067)
+8.  KYLE (4-8, 1286.5)
+9.  COLN (1-11, 1024.3)
+10. ROWN (4-8, 950.5)
 
 ### 2017
 
