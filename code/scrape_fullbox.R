@@ -324,4 +324,5 @@ all17 <- bind_rows(bind_list17)
 
 # combine all scores ------------------------------------------------------
 
-all <- bind_rows(all2017, all2018)
+all <- bind_rows(all17, all18)
+write_csv(all, "./data/fullbox.csv")
