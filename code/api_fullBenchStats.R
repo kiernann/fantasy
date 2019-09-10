@@ -5,8 +5,8 @@ library(glue)
 library(rvest)
 
 league_id <- 252353
-year <- 2018
-mngr <- 1
+year <- 2018      #change year
+mngr <- 1         #change manager
 
 url <- glue("https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/{league_id}")
 f <- GET(url, query = list("seasonId" = year, view = "roster"))
