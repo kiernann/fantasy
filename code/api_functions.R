@@ -4,13 +4,11 @@ library(httr)
 library(glue)
 library(rvest)
 
-league_id <- 252353
-year <- 2018      #change year
-mngr <- 1         #change manager
-
-url <- glue("https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/{league_id}")
-f <- GET(url, query = list(view = "roster", scoringPeriodId = 1))
-x <- content(f)
+fantasy_data <- function(lid, ...) {
+  api <- str_c("https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/", lid)
+  data <- content(GET(url = api, query = list(...)))
+  return(data)
+}
 
 roster_entry <- function(entry) {
   tibble(
@@ -21,10 +19,25 @@ roster_entry <- function(entry) {
     last    = entry$playerPoolEntry$player$lastName,
     owned   = entry$playerPoolEntry$player$ownership$percentOwned/100,
     started = entry$playerPoolEntry$player$ownership$percentStarted/100
-  )
+  ) %>% 
+    mutate(
+      slot = slot %>%
+        recode(
+          "0"  = "QB", 
+          "2"  = "RB", 
+          "4"  = "WR", 
+          "6"  = "TE", 
+          "16" = "DF", 
+          "17" = "KI", 
+          "20" = "BE", 
+          "23" = "FX"
+        )
+    )
 }
 
-map_df(x[[1]]$teams[[2]]$roster$entries, roster_entry) %>% arrange(slot)
+x <- fantasy_data(lid = 252353, view = "roster", scoringPeriodId = 1)
+
+map_df(x[[1]]$teams[[2]]$roster$entries, roster_entry)
 
 week <- rep(list(NA), length(x[[1]]$teams))
 for (i in seq_along(x[[1]]$teams)) {
@@ -33,3 +46,5 @@ for (i in seq_along(x[[1]]$teams)) {
     map_df(roster_entry) %>% 
     arrange(slot)
 }
+
+enframe(unlist(x[[1]]$teams[[2]]$roster$entries[[1]]$playerPoolEntry$player$stats[[1]]$stats))
