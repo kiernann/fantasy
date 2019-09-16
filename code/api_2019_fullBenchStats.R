@@ -42,9 +42,9 @@ for (weekId in 1:2) {
     }
   }
 }
-team <- tibble(mngrId, week, plyr, proj, points, slot, pos)
-team$slot <- as.integer(recode(as.character(team$slot), "23" = "19"))
-team <- arrange(team, week, mngrId, slot)
-team$slot <- recode(team$slot, "0" = "QB", "2" = "RB", "4" = "WR", "6" = "TE", "16" = "D", "17" = "K", "20" = "Bench", "19" = "Flex")
-team$pos <- recode(team$pos, "1" = "QB", "2" = "RB", "3"= "WR", "4" = "TE", "5" = "K", "16" = "D")
-print(team)
+data <- tibble(mngrId, week, plyr, proj, points, slot, pos)
+data$slot <- as.integer(recode(as.character(data$slot), "23" = "19"))
+data <- arrange(data, week, mngrId, slot)
+data$slot <- recode(data$slot, "0" = "QB", "2" = "RB", "4" = "WR", "6" = "TE", "16" = "D", "17" = "K", "20" = "Bench", "19" = "Flex")
+data$pos <- recode(data$pos, "1" = "QB", "2" = "RB", "3"= "WR", "4" = "TE", "5" = "K", "16" = "D")
+print(data)
