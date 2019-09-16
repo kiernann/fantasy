@@ -8,5 +8,5 @@ ID <- 252353
 year <- 2019
 url <- glue("https://fantasy.espn.com/apis/v3/games/ffl/seasons/",year,"/segments/0/leagues/",ID)
 f <- GET(url, query = list(view = "mMatchup"))
-#also try mTeam, mBoxscore, mRoster, mSettings, kona_player_info, player_wl, mSchedule
+#also try: mTeam, mBoxscore, mRoster, mSettings, kona_player_info, player_wl, mSchedule
 x <- content(f)
