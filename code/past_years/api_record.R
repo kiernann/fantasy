@@ -7,21 +7,25 @@ fantasy_data <- function(lid, ...) {
   return(data)
 }
 
-y <- tibble()
-for (year in 2015:2018) {
-  x <- fantasy_data(252353, view = "roster", seasonId = year)[[1]]
-  transpose(transpose(x$teams)$record)$overall %>% 
+records <- tibble()
+for (i in 2015:2018) {
+  data <- fantasy_data(252353, view = "roster", seasonId = i)[[1]]
+  transpose(transpose(data$teams)$record)$overall %>% 
     map_df(as_tibble) %>% 
     mutate(
-      year = x$seasonId,
+      year = as.character(data$seasonId),
       diff = pointsFor - pointsAgainst,
-      id = as_vector(transpose(x$teams)$primaryOwner),
-      rank = as_vector(transpose(x$teams)$rankCalculatedFinal)
+      id = as_vector(transpose(data$teams)$primaryOwner),
+      rank = as_vector(transpose(data$teams)$rankCalculatedFinal)
     ) %>% 
-    left_join(select(map_dfr(x$members, as_tibble), id, firstName)) %>% 
+    group_by(id) %>% 
+    arrange(desc(wins)) %>% 
+    slice(1) %>% 
+    ungroup() %>% 
+    left_join(select(map_dfr(data$members, as_tibble), id, firstName)) %>% 
     select(
       year,
-      manager = firstName,
+      firstName,
       rank,
       wins, 
       losses, 
@@ -31,5 +35,58 @@ for (year in 2015:2018) {
       diff
     ) %>% 
     arrange(rank) %>% 
-    bind_rows(y) -> y
+    bind_rows(records) -> records
 }
+
+records$year <- fct_rev(as_factor(records$year))
+
+write_csv(records, "data/past_records.csv")
+
+records %>% 
+  drop_na(firstName) %>% 
+  ggplot(aes(x = firstName, y = diff)) +
+  geom_col(aes(fill = year), position = position_dodge(0.75), width = 0.75) +
+  geom_hline(yintercept = 0) +
+  scale_fill_brewer(type = "qual", palette = "Dark2", direction = -1) +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "2015-2018 GAA FFL Seasonal Points Above Against",
+    y = "(Points For) - (Points Against)",
+    x = "Manager", 
+    fill = "Year"
+  )
+
+ggsave(
+  filename = "plots/record_score_diff.png",
+  plot = last_plot(),
+  dpi = "retina",
+  height = 5,
+  width = 9
+)
+
+records %>% 
+  drop_na(firstName) %>% 
+  group_by(year) %>% 
+  mutate(
+    avg = median(pointsFor),
+    avg_diff = pointsFor - avg
+  ) %>% 
+  ggplot(aes(x = firstName, y = avg_diff)) +
+  geom_col(aes(fill = year), position = position_dodge(0.75), width = 0.75) +
+  geom_hline(yintercept = 0) +
+  scale_fill_brewer(type = "qual", palette = "Dark2", direction = -1) +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "2015-2018 GAA FFL Seasonal Points Above Median",
+    y = "(Points For) - (Median Points)",
+    x = "Manager", 
+    fill = "Year"
+  )
+
+ggsave(
+  filename = "plots/record_score_diff2.png",
+  plot = last_plot(),
+  dpi = "retina",
+  height = 5,
+  width = 9
+)
