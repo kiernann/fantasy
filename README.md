@@ -1,10 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# campfin \# GAA
+# GAA
 
-This is the GitHub Repository for all Gambling Addicts Anonymous tools
-and data.
+This is the GitHub Repository for the Gambling Addicts Annonymous
+fantasy football team.
 
 ## Current teams
 
@@ -13,7 +13,7 @@ and data.
   - CART
   - KIER \[League Manager\]
   - KYLE
-  - NICK *(Champion)*
+  - NICK *(Champ)*
   - PEPE
   - CORY
   - ~~COLN~~
@@ -21,62 +21,69 @@ and data.
   - ~~CHAR~~
   - ~~ROWN~~ *(Griz)*
 
-## League Data, Code, Graphs
+## Standings
 
-  - [constitution.md](constitution.md)
-  - [scores.csv](scores.csv)
-  - [draft.csv](draft.csv)
-  - [undefeat\_odds.R](undefeat_odds.R)
-  - [matchup\_graph.R](matchup_graph.R)
+``` r
+library(tidyverse)
+```
 
-## League History
+``` r
+record <- read_csv("data/past_records.csv")
+```
 
 ### 2018
 
-1.  NICK (8-4, 1191.3)
-2.  BILL (10-2, 1584.4)
-3.  KIER (9-3, 1161.9)
-4.  CHAR (8-4, 1086.3)
-5.  PEPE (5-7, 1154.4)
-6.  CART (5-5, 1221.9)
-7.  AGUS (5-7, 1067)
-8.  KYLE (4-8, 1286.5)
-9.  COLN (1-11, 1024.3)
-10. ROWN (4-8, 950.5)
+| firstName | rank | wins | losses | percentage | pointsFor | pointsAgainst |     diff |
+| :-------- | ---: | ---: | -----: | ---------: | --------: | ------------: | -------: |
+| Nick      |    1 |    8 |      4 |       0.67 |   1324.04 |       1155.56 |   168.48 |
+| William   |    2 |   10 |      2 |       0.83 |   1584.36 |       1128.36 |   456.00 |
+| Kiernan   |    3 |    9 |      3 |       0.75 |   1161.88 |       1068.50 |    93.38 |
+| Charles   |    4 |    8 |      4 |       0.67 |   1086.32 |       1103.20 |  \-16.88 |
+| Brian     |    5 |    5 |      7 |       0.42 |   1154.44 |       1189.30 |  \-34.86 |
+| Carter    |    6 |    6 |      6 |       0.50 |   1221.88 |       1133.54 |    88.34 |
+| Angus     |    7 |    5 |      7 |       0.42 |   1066.98 |       1249.34 | \-182.36 |
+| Kiley     |    8 |    4 |      8 |       0.33 |   1286.52 |       1313.48 |  \-26.96 |
+| Colin     |    9 |    1 |     11 |       0.08 |   1024.30 |       1299.08 | \-274.78 |
+| Rowen     |   10 |    4 |      8 |       0.33 |    950.54 |       1220.90 | \-270.36 |
 
 ### 2017
 
-1.  **NICK** (8-4, 983.9)
-2.  CART (7-5, 1008.1)
-3.  KIER (9-3, 1068.2)
-4.  ROWN (7-5, 1047.6)
-5.  PEPE (5-8, 1097.7)
-6.  KYLE (6-6, 1118.6)
-7.  CHAR (3-9, 1268.9)
-8.  COLN (6-6, 1071.6)
-9.  BILL (5-7, 1110.4)
-10. *AGUS* (5-7, 1073.7)
+| firstName | rank | wins | losses | percentage | pointsFor | pointsAgainst |     diff |
+| :-------- | ---: | ---: | -----: | ---------: | --------: | ------------: | -------: |
+| Nick      |    1 |    8 |      4 |       0.67 |   1191.28 |        983.90 |   207.38 |
+| Carter    |    2 |    7 |      5 |       0.58 |   1097.24 |       1008.06 |    89.18 |
+| Kiernan   |    3 |    9 |      3 |       0.75 |   1170.42 |       1068.18 |   102.24 |
+| Rowen     |    4 |    7 |      5 |       0.58 |   1130.06 |       1047.60 |    82.46 |
+| Brian     |    5 |    4 |      8 |       0.33 |   1058.34 |       1097.66 |  \-39.32 |
+| Kiley     |    6 |    6 |      6 |       0.50 |   1032.26 |       1118.64 |  \-86.38 |
+| Charles   |    7 |    3 |      9 |       0.25 |   1007.02 |       1268.92 | \-261.90 |
+| Colin     |    8 |    6 |      6 |       0.50 |    992.88 |       1071.60 |  \-78.72 |
+| William   |    9 |    5 |      7 |       0.42 |   1092.68 |       1110.42 |  \-17.74 |
+| Angus     |   10 |    5 |      7 |       0.42 |   1076.48 |       1073.68 |     2.80 |
 
 ### 2016
 
-1.  **KIER** (8-5, 1299.7)
-2.  CART (11-2, 1426.8)
-3.  CHAR (8-5, 1296.2)
-4.  NICK (10-3, 1376.6)
-5.  PEPE (6-7, 1226.3)
-6.  KYLE (6-7, 1259.5)
-7.  GRIZ (7-6, 1178.8)
-8.  ROWN (4-9, 1185.5)
-9.  AGUS (2-11, 1044.9)
-10. *BILL* (3-10, 1154.6)
+| firstName | rank | wins | losses | percentage | pointsFor | pointsAgainst |     diff |
+| :-------- | ---: | ---: | -----: | ---------: | --------: | ------------: | -------: |
+| Kiernan   |    1 |    8 |      5 |       0.62 |   1299.66 |       1209.52 |    90.14 |
+| Carter    |    2 |   11 |      2 |       0.85 |   1426.80 |       1190.58 |   236.22 |
+| Charles   |    3 |    8 |      5 |       0.62 |   1296.22 |       1319.48 |  \-23.26 |
+| Nick      |    4 |   10 |      3 |       0.77 |   1376.58 |       1175.60 |   200.98 |
+| Rowen     |    5 |    4 |      9 |       0.31 |   1178.78 |       1276.72 |  \-97.94 |
+| Brian     |    7 |    6 |      7 |       0.46 |   1226.28 |       1160.10 |    66.18 |
+| Kiley     |    8 |    6 |      7 |       0.46 |   1259.50 |       1277.36 |  \-17.86 |
+| William   |    9 |    3 |     10 |       0.23 |   1044.90 |       1287.16 | \-242.26 |
+| Angus     |   10 |    2 |     11 |       0.15 |   1154.56 |       1337.86 | \-183.30 |
 
 ### 2015
 
-1.  **CHAR** (7-6, 1132)
-2.  BILL (8-5, 1295)
-3.  ROWN (7-6, 1192)
-4.  KIER (10-3, 1396)
-5.  AGUS (3-10, 999)
-6.  PEPE (6-7, 1182)
-7.  CART (6-6-1, 1210)
-8.  *GRIZ* (4-8-1, 1177)
+| firstName | rank | wins | losses | percentage | pointsFor | pointsAgainst |  diff |
+| :-------- | ---: | ---: | -----: | ---------: | --------: | ------------: | ----: |
+| Charles   |    1 |    7 |      6 |       0.54 |      1132 |          1158 |  \-26 |
+| William   |    2 |    8 |      5 |       0.62 |      1295 |          1215 |    80 |
+| Rowen     |    3 |    7 |      6 |       0.54 |      1192 |          1153 |    39 |
+| Kiernan   |    4 |   10 |      3 |       0.77 |      1396 |          1106 |   290 |
+| Angus     |    5 |    3 |     10 |       0.23 |       999 |          1174 | \-175 |
+| Brian     |    6 |    6 |      7 |       0.46 |      1182 |          1172 |    10 |
+| Carter    |    7 |    6 |      6 |       0.50 |      1210 |          1211 |   \-1 |
+| NA        |    8 |    4 |      8 |       0.35 |      1177 |          1394 | \-217 |
