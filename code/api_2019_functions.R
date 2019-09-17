@@ -10,33 +10,30 @@ fantasy_data <- function(lid, ...) {
   return(data)
 }
 
-
 roster_entry <- function(entry) {
-  find_proj_stat <- function(stats_list) {
-    names <- map(stats_list, names)
-    str_detect_any <- function(...) any(str_detect(...))
-    which(map_lgl(names, str_detect_any, "projectionAnalysis"))
-  }
   stats <- entry$playerPoolEntry$player$stats
-  stats <- stats[[find_proj_stat(stats)]]
+  names(stats) <- map(stats, use_series, "id")
+  names <- names(stats)
+  names(stats)[names == max(names[str_which(names, "112019")])] <- "proj"
+  names(stats)[names == max(names[str_which(names, "014011")])] <- "score"
   tibble(
-    id      = entry$playerId,
-    name    = entry$playerPoolEntry$player$fullName,
-    slot    = entry$lineupSlotId,
+    year    = stats$score$seasonId,
+    week    = stats$score$scoringPeriodId,
+    player  = as.character(abs(entry$playerId)),
+    first   = entry$playerPoolEntry$player$firstName,
+    last    = entry$playerPoolEntry$player$lastName,
     pos     = entry$playerPoolEntry$player$defaultPositionId,
     team    = entry$playerPoolEntry$player$proTeamId,
     owned   = entry$playerPoolEntry$player$ownership$percentOwned/100,
     start   = entry$playerPoolEntry$player$ownership$percentStarted/100,
-    points  = 
-    proj    = stats$appliedTotal,
-    ceil    = stats$appliedTotalCeiling,
-    vola    = ifelse(
-      is.null(stats$projectionAnalysis$volatility), NA, stats$projectionAnalysis$volatility
-    )
+    slot    = entry$lineupSlotId,
+    proj    = stats$proj$appliedTotal,
+    score   = stats$score$appliedTotal
   )
 }
 
 team_roster <- function(team) {
+  abb <- team$abbrev
   roster <- team$roster$entries %>% 
     map_dfr(roster_entry) %>% 
     arrange(slot) %>% 
@@ -49,8 +46,8 @@ team_roster <- function(team) {
           "6"  = "TE", 
           "16" = "DF", 
           "17" = "K", 
-          "20" = "Bench", 
-          "23" = "Flex"
+          "20" = "BE", 
+          "23" = "FX"
         ),
       pos = pos %>% 
         recode(
@@ -63,16 +60,20 @@ team_roster <- function(team) {
         )
     )
   roster %>% 
-    mutate(abbrev = team$abbrev) %>% 
+    mutate(
+      abbrev = abb,
+      player = str_pad(player, max(nchar(player)), "left", "0")
+    ) %>% 
     select(abbrev, everything())
 }
 
 
-period <- 1
-x <- fantasy_data(252353, view = "roster", scoringPeriodId = period)
-team_roster(x$teams[[5]])
+data <- fantasy_data(
+  lid = 252353, 
+  view = "roster", 
+  scoringPeriodId = 2
+)
 
-rosters <- rep(list(NA), length(x$teams))
-for (i in seq_along(x$teams)) {
-  roster <- team_roster(x$teams[[i]]$roster$entries)
-}
+score_history <- map_df(data$teams, team_roster)
+
+write_csv(score_history, path = "data/score_history.csv")
