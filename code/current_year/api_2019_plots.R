@@ -9,6 +9,7 @@ year <- 2019
 url <- glue("https://fantasy.espn.com/apis/v3/games/ffl/seasons/{year}/segments/0/leagues/{id}")
 response <- GET(url, query = list(view = "mMatchup"))
 # also try: mTeam, mBoxscore, mRoster, mSettings, kona_player_info, player_wl, mSchedule
+content <- content(response)
 
 format_matchup <- function(matchup) {
   tibble(
@@ -40,7 +41,8 @@ scores <- content$schedule %>%
   left_join(teams) %>%
   select(-team) %>% 
   select(week, game, team = abbrev, everything()) %>% 
-  filter(score != 0)
+  filter(score != 0) %>% 
+  mutate(week = fct_rev(as_factor(week)))
 
 ff_median <- median(scores$score)
 ff_mean <- mean(scores$score)
@@ -58,7 +60,8 @@ scores_plot <- scores %>%
   geom_col(aes(fill = week)) +
   coord_flip() +
   theme(legend.position = "bottom") +
-  labs(title = "2019 GAA FFL Scores")
+  labs(title = "2019 GAA FFL Scores") +
+  scale_fill_brewer(palette = "Dark2")
 
 ggsave(
   filename = glue("plots/{Sys.Date()}_scores.png"),
@@ -74,12 +77,14 @@ for (i in seq_along(scores$score)) {
 }
 
 power_plot <- scores %>% 
-  mutate(power = power_wins) %>% 
+  group_by(week) %>% 
+  mutate(power = map_int(score, ~ sum(.x > score))) %>% 
   ggplot(aes(x = team, y = power)) +
   geom_col(aes(fill = week)) +
   coord_flip() +
   theme(legend.position = "bottom") +
-  labs(title = "2019 GAA FFL Power Wins")
+  labs(title = "2019 GAA FFL Power Wins") +
+  scale_fill_brewer(palette = "Dark2")
 
 ggsave(
   filename = glue("plots/{Sys.Date()}_power.png"),
