@@ -48,12 +48,26 @@ ff_median <- median(scores$score)
 ff_mean <- mean(scores$score)
 ff_dev <- sd(scores$score)
 
-scores %>% 
-  group_by(game) %>% 
-  arrange(game, score) %>% 
-  mutate(won = c(F, T)) %>% 
+total_wins <- scores %>% 
+  group_by(week, game) %>% 
+  mutate(won = map_dbl(score, ~ sum(.x > score))) %>% 
   group_by(team) %>% 
-  summarise(wins = sum(won))
+  summarize(wins = sum(won)) %>% 
+  arrange(desc(wins)) %>% 
+  ggplot(aes(x = reorder(team, wins), y = wins)) +
+  geom_col(aes(fill = team)) +
+  coord_flip() +
+  theme(legend.position = "bottom") +
+  labs(title = "2019 GAA FFL Regular Wins") +
+  scale_fill_brewer(palette = "Dark2", guide = FALSE)
+
+ggsave(
+  filename = glue("plots/{Sys.Date()}_wins.png"),
+  plot = total_wins,
+  dpi = "retina",
+  width = 9,
+  height = 5
+)
 
 scores_plot <- scores %>% 
   ggplot(aes(x = reorder(team, score), y = score)) +
