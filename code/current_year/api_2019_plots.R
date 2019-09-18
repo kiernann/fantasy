@@ -56,7 +56,7 @@ scores %>%
   summarise(wins = sum(won))
 
 scores_plot <- scores %>% 
-  ggplot(aes(x = team, y = score)) +
+  ggplot(aes(x = reorder(team, score), y = score)) +
   geom_col(aes(fill = week)) +
   coord_flip() +
   theme(legend.position = "bottom") +
@@ -79,7 +79,7 @@ for (i in seq_along(scores$score)) {
 power_plot <- scores %>% 
   group_by(week) %>% 
   mutate(power = map_int(score, ~ sum(.x > score))) %>% 
-  ggplot(aes(x = team, y = power)) +
+  ggplot(aes(x = reorder(team, power), y = power)) +
   geom_col(aes(fill = week)) +
   coord_flip() +
   theme(legend.position = "bottom") +
