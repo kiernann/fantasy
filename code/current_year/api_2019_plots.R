@@ -191,8 +191,8 @@ matchup_plot <- scores %>%
       angle = 26,
       family = "sans",
       fontface = "plain"
-    ), 
-    size = 6,
+    ),
+    size = 8,
     nudge_x = -5
   ) +
   geom_point(aes(color = week), size = 10, alpha = 0.75) +
