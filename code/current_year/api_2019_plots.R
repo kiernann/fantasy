@@ -54,8 +54,12 @@ total_wins <- scores %>%
   geom_col(aes(fill = team)) +
   coord_flip() +
   theme(legend.position = "bottom") +
-  labs(title = "2019 GAA FFL Regular Wins") +
-  scale_fill_brewer(palette = "Dark2", guide = FALSE)
+  scale_fill_brewer(palette = "Dark2", guide = FALSE) +
+  labs(
+    title = "2019 GAA FFL Regular Wins",
+    y = "Total Wins",
+    x = "Team"
+    )
 
 ggsave(
   filename = glue("plots/{Sys.Date()}_wins.png"),
@@ -70,8 +74,16 @@ scores_plot <- scores %>%
   geom_col(aes(fill = week)) +
   coord_flip() +
   theme(legend.position = "bottom") +
-  labs(title = "2019 GAA FFL Scores") +
-  scale_fill_brewer(palette = "Dark2")
+  scale_fill_brewer(
+    palette = "Dark2", 
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  labs(
+    title = "2019 GAA FFL Points For",
+    y = "Points For",
+    x = "Team",
+    fill = "Week"
+  )
 
 ggsave(
   filename = glue("plots/{Sys.Date()}_scores.png"),
@@ -93,8 +105,16 @@ power_plot <- scores %>%
   geom_col(aes(fill = week)) +
   coord_flip() +
   theme(legend.position = "bottom") +
-  labs(title = "2019 GAA FFL Power Wins") +
-  scale_fill_brewer(palette = "Dark2")
+  scale_fill_brewer(
+    palette = "Dark2", 
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  labs(
+    title = "2019 GAA FFL Power Wins",
+    y = "Power Wins",
+    x = "Team",
+    fill = "Week"
+  )
 
 ggsave(
   filename = glue("plots/{Sys.Date()}_power.png"),
@@ -111,12 +131,45 @@ against_plot <- scores %>%
   geom_col(aes(fill = week)) +
   coord_flip() +
   theme(legend.position = "bottom") +
-  labs(title = "2019 GAA FFL Scores") +
-  scale_fill_brewer(palette = "Dark2")
+  scale_fill_brewer(
+    palette = "Dark2", 
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  labs(
+    title = "2019 GAA FFL Points Against",
+    y = "Points Against",
+    x = "Team",
+    fill = "Week"
+  )
 
 ggsave(
   filename = glue("plots/{Sys.Date()}_against.png"),
   plot = against_plot,
+  dpi = "retina",
+  width = 9,
+  height = 5
+)
+
+for_against_plot <- scores %>% 
+  group_by(week, game) %>% 
+  mutate(against = coalesce(lag(score), lead(score))) %>% 
+  group_by(team) %>% 
+  summarize(pf = sum(score), pa = sum(against)) %>% 
+  ggplot(aes(x = pf, y = pa)) +
+  geom_label(aes(label = team, fill = team), size = 5) +
+  scale_fill_brewer(
+    palette = "Dark2", 
+    guide = FALSE
+  ) +
+  labs(
+    title = "2019 GAA FFL Points Relationship",
+    y = "Points Against",
+    x = "Points For"
+  )
+
+ggsave(
+  filename = glue("plots/{Sys.Date()}_for_against.png"),
+  plot = for_against_plot,
   dpi = "retina",
   width = 9,
   height = 5
@@ -130,13 +183,31 @@ matchup_plot <- scores %>%
   ) %>% 
   ggplot(aes(x = `TRUE`, y = `FALSE`)) +
   geom_abline(slope = 1, intercept = 0, linetype = 2) +
-  geom_point(aes(color = week), size = 7, alpha = 0.75) +
-  scale_color_brewer(palette = "Dark2") +
+  geom_text(
+    mapping = aes(
+      x = 130, 
+      y = 130, 
+      label = "Close Match", 
+      angle = 27,
+      family = "sans",
+      fontface = "plain"
+    ), 
+    size = 8,
+    nudge_x = -5
+  ) +
+  geom_point(aes(color = week), size = 10, alpha = 0.75) +
+  theme(legend.position = "bottom") +
+  scale_color_brewer(
+    palette = "Dark2", 
+    guide = guide_legend(reverse = TRUE)
+  ) +
   labs(
     title = "2019 GAA FFL Matchups",
     x = "Home Score",
-    y = "Away Score"
+    y = "Away Score",
+    color = "Week"
   )
+
 
 ggsave(
   filename = glue("plots/{Sys.Date()}_matchup.png"),
