@@ -3,13 +3,9 @@ library(jsonlite)
 library(httr)
 library(glue)
 library(rvest)
+library(fflr)
 
-id <- 252353
-year <- 2019
-url <- glue("https://fantasy.espn.com/apis/v3/games/ffl/seasons/{year}/segments/0/leagues/{id}")
-response <- GET(url, query = list(view = "mMatchup"))
-# also try: mTeam, mBoxscore, mRoster, mSettings, kona_player_info, player_wl, mSchedule
-content <- content(response)
+content <- ffl_get(252353, view = "mMatchup")
 
 format_matchup <- function(matchup) {
   tibble(
@@ -103,6 +99,48 @@ power_plot <- scores %>%
 ggsave(
   filename = glue("plots/{Sys.Date()}_power.png"),
   plot = power_plot,
+  dpi = "retina",
+  width = 9,
+  height = 5
+)
+
+against_plot <- scores %>% 
+  group_by(week, game) %>% 
+  mutate(against = coalesce(lag(score), lead(score))) %>% 
+  ggplot(aes(x = reorder(team, score), y = against)) +
+  geom_col(aes(fill = week)) +
+  coord_flip() +
+  theme(legend.position = "bottom") +
+  labs(title = "2019 GAA FFL Scores") +
+  scale_fill_brewer(palette = "Dark2")
+
+ggsave(
+  filename = glue("plots/{Sys.Date()}_against.png"),
+  plot = against_plot,
+  dpi = "retina",
+  width = 9,
+  height = 5
+)
+
+matchup_plot <- scores %>% 
+  pivot_wider(
+    id_cols = c(week, game, home, score),
+    names_from = home,
+    values_from = score
+  ) %>% 
+  ggplot(aes(x = `TRUE`, y = `FALSE`)) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  geom_point(aes(color = week), size = 7, alpha = 0.75) +
+  scale_color_brewer(palette = "Dark2") +
+  labs(
+    title = "2019 GAA FFL Matchups",
+    x = "Home Score",
+    y = "Away Score"
+  )
+
+ggsave(
+  filename = glue("plots/{Sys.Date()}_matchup.png"),
+  plot = matchup_plot,
   dpi = "retina",
   width = 9,
   height = 5
