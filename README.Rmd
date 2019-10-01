@@ -37,10 +37,38 @@ This is the GitHub Repository for the Gambling Addicts Annonymous fantasy footba
 
 ```{r libs, warning=FALSE, message=FALSE}
 library(tidyverse)
+library(knitr)
+library(fflr)
 ```
 
-```{r read_record, warning=FALSE, message=FALSE}
-record <- read_csv("data/past_records.csv")
+```{r download_record, echo=FALSE, message=FALSE, warning=FALSE}
+record <- tibble()
+for (i in 2015:2018) {
+  data <- ffl_get(252353, view = "roster", seasonId = i, current = FALSE)[[1]]
+  transpose(transpose(data$teams)$record)$overall %>% 
+    map_df(as_tibble) %>% 
+    mutate(
+      year = as.character(data$seasonId),
+      id = as_vector(transpose(data$teams)$primaryOwner),
+      rank = as_vector(transpose(data$teams)$rankCalculatedFinal)
+    ) %>% 
+    group_by(id) %>% 
+    arrange(desc(wins)) %>% 
+    slice(1) %>% 
+    ungroup() %>% 
+    left_join(select(map_dfr(data$members, as_tibble), id, firstName)) %>% 
+    select(
+      year,
+      firstName,
+      rank,
+      wins, 
+      losses, 
+      pointsFor, 
+      pointsAgainst
+    ) %>% 
+    arrange(rank) %>% 
+    bind_rows(record) -> record
+}
 ```
 
 ### 2018
@@ -50,7 +78,15 @@ record %>%
   filter(year == 2018) %>% 
   select(-year) %>% 
   arrange(rank) %>% 
-  kable(digits = 2)
+  kable(
+    digits = 2, 
+    col.names = c("Team", 
+                  "Rank", 
+                  "Wins", 
+                  "Losses", 
+                  "Points For",
+                  "Points Against")
+  )
 ```
 
 ### 2017
@@ -60,7 +96,15 @@ record %>%
   filter(year == 2017) %>% 
   select(-year) %>%  
   arrange(rank) %>% 
-  kable(digits = 2)
+  kable(
+    digits = 2, 
+    col.names = c("Team", 
+                  "Rank", 
+                  "Wins", 
+                  "Losses", 
+                  "Points For",
+                  "Points Against")
+  )
 ```
 
 ### 2016
@@ -70,7 +114,15 @@ record %>%
   filter(year == 2016) %>% 
   select(-year) %>%  
   arrange(rank) %>% 
-  kable(digits = 2)
+  kable(
+    digits = 2, 
+    col.names = c("Team", 
+                  "Rank", 
+                  "Wins", 
+                  "Losses", 
+                  "Points For",
+                  "Points Against")
+  )
 ```
 
 ### 2015
@@ -80,6 +132,14 @@ record %>%
   filter(year == 2015) %>% 
   select(-year) %>% 
   arrange(rank) %>% 
-  kable(digits = 2)
+  kable(
+    digits = 2, 
+    col.names = c("Team", 
+                  "Rank", 
+                  "Wins", 
+                  "Losses", 
+                  "Points For",
+                  "Points Against")
+  )
 ```
 
