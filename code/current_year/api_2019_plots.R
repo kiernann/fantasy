@@ -5,7 +5,7 @@ library(glue)
 library(rvest)
 library(fflr)
 
-content <- ffl_get(252353, view = "mMatchup")
+content <- fantasy_matchup(252353)
 
 format_matchup <- function(matchup) {
   tibble(
@@ -183,18 +183,6 @@ matchup_plot <- scores %>%
   ) %>% 
   ggplot(aes(x = `TRUE`, y = `FALSE`)) +
   geom_abline(slope = 1, intercept = 0, linetype = 2) +
-  geom_text(
-    mapping = aes(
-      x = 130, 
-      y = 130, 
-      label = "Close Match", 
-      angle = 26,
-      family = "sans",
-      fontface = "plain"
-    ),
-    size = 8,
-    nudge_x = -5
-  ) +
   geom_point(aes(color = week), size = 10, alpha = 0.75) +
   theme(legend.position = "bottom") +
   scale_color_brewer(
@@ -207,7 +195,6 @@ matchup_plot <- scores %>%
     y = "Away Score",
     color = "Week"
   )
-
 
 ggsave(
   filename = glue("plots/{Sys.Date()}_matchup.png"),
