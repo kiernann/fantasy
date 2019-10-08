@@ -156,7 +156,8 @@ for_against_plot <- scores %>%
   group_by(team) %>% 
   summarize(pf = sum(score), pa = sum(against)) %>% 
   ggplot(aes(x = pf, y = pa)) +
-  geom_label(aes(label = team, fill = team), size = 5) +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  geom_label(aes(label = team, fill = team), size = 6) +
   scale_fill_brewer(
     palette = "Dark2", 
     guide = FALSE
@@ -165,14 +166,18 @@ for_against_plot <- scores %>%
     title = "2019 GAA FFL Points Relationship",
     y = "Points Against",
     x = "Points For"
+  ) +
+  coord_cartesian(
+    xlim = c(400, 650),
+    ylim = c(400, 650)
   )
 
 ggsave(
   filename = glue("plots/{Sys.Date()}_for_against.png"),
   plot = for_against_plot,
   dpi = "retina",
-  width = 9,
-  height = 5
+  width = 7,
+  height = 7
 )
 
 matchup_plot <- scores %>% 
@@ -194,12 +199,16 @@ matchup_plot <- scores %>%
     x = "Home Score",
     y = "Away Score",
     color = "Week"
+  ) +
+  coord_cartesian(
+    xlim = c(60, 160),
+    ylim = c(60, 160)
   )
 
 ggsave(
   filename = glue("plots/{Sys.Date()}_matchup.png"),
   plot = matchup_plot,
   dpi = "retina",
-  width = 9,
-  height = 5
+  width = 7,
+  height = 7
 )
