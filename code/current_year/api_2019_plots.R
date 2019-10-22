@@ -164,8 +164,8 @@ matchup_plot <- scores %>%
     color = "Week"
   ) +
   coord_cartesian(
-    xlim = c(60, 160),
-    ylim = c(60, 160)
+    xlim = c(50, 160),
+    ylim = c(50, 160)
   )
 
 ggsave(
