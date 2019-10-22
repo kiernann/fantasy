@@ -5,6 +5,7 @@ library(fflr)
 scores <- form_matchup(data = fantasy_matchup(lid = 252353))
 teams <- form_teams(data = fantasy_members(lid = 252353))
 scores <- left_join(scores, teams) %>% filter(score != 0)
+scores$week <- fct_rev(scores$week)
 
 total_wins <- scores %>% 
   group_by(week, game) %>% 
@@ -130,8 +131,8 @@ for_against_plot <- scores %>%
     x = "Points For"
   ) +
   coord_cartesian(
-    xlim = c(400, 650),
-    ylim = c(400, 650)
+    xlim = c(500, 850),
+    ylim = c(500, 850)
   )
 
 ggsave(
