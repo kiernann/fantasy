@@ -1,11 +1,20 @@
 library(tidyverse)
+library(magrittr)
 library(glue)
 library(fflr)
 
-scores <- form_matchup(data = fantasy_matchup(lid = 252353))
-teams <- form_teams(data = fantasy_members(lid = 252353))
-scores <- left_join(scores, teams) %>% filter(score != 0)
-scores$week <- fct_rev(scores$week)
+teams <- 
+  fantasy_members(252353) %>% 
+  form_teams() %>% 
+  select(id, abbrev)
+
+scores <- 
+  fantasy_matchup(252353) %>% 
+  use_series(schedule) %>% 
+  map_df(form_matchup) %>% 
+  left_join(teams) %>% 
+  filter(score != 0) %>% 
+  mutate(week = fct_rev(week))
 
 total_wins <- scores %>% 
   group_by(week, game) %>% 
