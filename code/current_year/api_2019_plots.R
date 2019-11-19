@@ -44,12 +44,10 @@ ggsave(
 scores_plot <- scores %>% 
   ggplot(aes(x = reorder(abbrev, score), y = score)) +
   geom_col(aes(fill = week)) +
-  coord_flip() +
+  guides(fill = guide_legend(nrow = 1, reverse = TRUE)) +
   theme(legend.position = "bottom") +
-  scale_fill_brewer(
-    palette = "Dark2", 
-    guide = guide_legend(reverse = TRUE)
-  ) +
+  scale_fill_fantasy() +
+  coord_flip() +
   labs(
     title = "2019 GAA FFL Points For",
     y = "Points For",
@@ -75,12 +73,10 @@ power_plot <- scores %>%
   mutate(power = map_int(score, ~ sum(.x > score))) %>% 
   ggplot(aes(x = reorder(abbrev, power), y = power)) +
   geom_col(aes(fill = week)) +
-  coord_flip() +
+  guides(fill = guide_legend(nrow = 1, reverse = TRUE)) +
   theme(legend.position = "bottom") +
-  scale_fill_brewer(
-    palette = "Dark2", 
-    guide = guide_legend(reverse = TRUE)
-  ) +
+  scale_fill_fantasy() +
+  coord_flip() +
   labs(
     title = "2019 GAA FFL Power Wins",
     y = "Power Wins",
@@ -101,12 +97,10 @@ against_plot <- scores %>%
   mutate(against = coalesce(lag(score), lead(score))) %>% 
   ggplot(aes(x = reorder(abbrev, score), y = against)) +
   geom_col(aes(fill = week)) +
-  coord_flip() +
+  guides(fill = guide_legend(nrow = 1, reverse = TRUE)) +
   theme(legend.position = "bottom") +
-  scale_fill_brewer(
-    palette = "Dark2", 
-    guide = guide_legend(reverse = TRUE)
-  ) +
+  scale_fill_fantasy() +
+  coord_flip() +
   labs(
     title = "2019 GAA FFL Points Against",
     y = "Points Against",
@@ -140,8 +134,8 @@ for_against_plot <- scores %>%
     x = "Points For"
   ) +
   coord_cartesian(
-    xlim = c(500, 850),
-    ylim = c(500, 850)
+    xlim = c(850, 1300),
+    ylim = c(850, 1300)
   )
 
 ggsave(
@@ -161,11 +155,8 @@ matchup_plot <- scores %>%
   ggplot(aes(x = `TRUE`, y = `FALSE`)) +
   geom_abline(slope = 1, intercept = 0, linetype = 2) +
   geom_point(aes(color = week), size = 10, alpha = 0.75) +
-  theme(legend.position = "bottom") +
-  scale_color_brewer(
-    palette = "Dark2", 
-    guide = guide_legend(reverse = TRUE)
-  ) +
+  guides(color = guide_legend(nrow = 1)) +
+  theme(legend.position = "none") +
   labs(
     title = "2019 GAA FFL Matchups",
     x = "Home Score",
