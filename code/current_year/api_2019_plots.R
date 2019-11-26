@@ -24,13 +24,15 @@ total_wins <- scores %>%
   arrange(desc(wins)) %>% 
   ggplot(aes(x = reorder(abbrev, wins), y = wins)) +
   geom_col(aes(fill = abbrev)) +
+  geom_vline(xintercept = 4.5, linetype = 2) +
   coord_flip() +
   theme(legend.position = "bottom") +
   scale_fill_brewer(palette = "Dark2", guide = FALSE) +
+  scale_y_continuous(breaks = 1:12, minor_breaks = NULL) +
   labs(
     title = "2019 GAA FFL Regular Wins",
     y = "Total Wins",
-    x = "abbrev"
+    x = "Manager"
     )
 
 ggsave(
@@ -51,7 +53,7 @@ scores_plot <- scores %>%
   labs(
     title = "2019 GAA FFL Points For",
     y = "Points For",
-    x = "abbrev",
+    x = "Manager",
     fill = "Week"
   )
 
@@ -80,7 +82,7 @@ power_plot <- scores %>%
   labs(
     title = "2019 GAA FFL Power Wins",
     y = "Power Wins",
-    x = "abbrev",
+    x = "Manager",
     fill = "Week"
   )
 
@@ -104,7 +106,7 @@ against_plot <- scores %>%
   labs(
     title = "2019 GAA FFL Points Against",
     y = "Points Against",
-    x = "abbrev",
+    x = "Manager",
     fill = "Week"
   )
 
@@ -134,8 +136,8 @@ for_against_plot <- scores %>%
     x = "Points For"
   ) +
   coord_cartesian(
-    xlim = c(850, 1300),
-    ylim = c(850, 1300)
+    xlim = c(1000, 1400),
+    ylim = c(1000, 1400)
   )
 
 ggsave(
@@ -156,6 +158,7 @@ matchup_plot <- scores %>%
   geom_abline(slope = 1, intercept = 0, linetype = 2) +
   geom_point(aes(color = week), size = 10, alpha = 0.75) +
   guides(color = guide_legend(nrow = 1)) +
+  scale_color_manual(values = c())
   theme(legend.position = "none") +
   labs(
     title = "2019 GAA FFL Matchups",
