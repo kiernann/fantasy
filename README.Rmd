@@ -11,44 +11,53 @@ library(knitr)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-"
+  fig.path = "man/figures/README-",
+  echo = FALSE, 
+  message = FALSE, 
+  warning = FALSE, 
+  results = 'asis'
 )
 ```
 
 # GAA
 
-This is the GitHub Repository for the Gambling Addicts Annonymous fantasy football team.
+This is the repository for the Gambling Addicts Annonymous fantasy football league.
 
 ## Current teams
-* AGUS [Commisioner]
+
+* AGUS [Comish.]
 * BILL
-* CART
-* KIER [League Manager]
+* CART *(Griz)*
+* KIER [LM] *(Champ)*
 * KYLE
-* NICK *(Champ)*
+* NICK
 * PEPE
 * CORY
 * ~~COLN~~
 * ~~GRIZ~~
 * ~~CHAR~~
-* ~~ROWN~~ *(Griz)*
+* ~~ROWN~~
 
-## Standings
-
-```{r libs, warning=FALSE, message=FALSE}
+```{r print_records}
 library(tidyverse)
+library(magrittr)
 library(knitr)
 library(fflr)
-```
-
-```{r download_record, echo=FALSE, message=FALSE, warning=FALSE}
-record <- tibble()
-for (i in 2015:2018) {
-  data <- ffl_get(252353, view = "roster", seasonId = i, current = FALSE)[[1]]
-  transpose(transpose(data$teams)$record)$overall %>% 
+years <- 2015:2018
+record <- rep(list(NA), length(years))
+for (i in seq_along(years)) {
+  cat("##", years[i], "\n")
+  data <- ff_data(252353, view = "roster", seasonId = years[i], current = FALSE)
+  data <- data[[1]]
+  teams <- select(map_dfr(data$members, as_tibble), id, firstName)
+  data %>% 
+    use_series(teams) %>% 
+    transpose() %>% 
+    use_series(record) %>% 
+    transpose() %>% 
+    use_series(overall) %>% 
     map_df(as_tibble) %>% 
     mutate(
-      year = as.character(data$seasonId),
       id = as_vector(transpose(data$teams)$primaryOwner),
       rank = as_vector(transpose(data$teams)$rankCalculatedFinal)
     ) %>% 
@@ -56,9 +65,8 @@ for (i in 2015:2018) {
     arrange(desc(wins)) %>% 
     slice(1) %>% 
     ungroup() %>% 
-    left_join(select(map_dfr(data$members, as_tibble), id, firstName)) %>% 
+    left_join(teams) %>% 
     select(
-      year,
       firstName,
       rank,
       wins, 
@@ -67,79 +75,18 @@ for (i in 2015:2018) {
       pointsAgainst
     ) %>% 
     arrange(rank) %>% 
-    bind_rows(record) -> record
+    kable(
+      digits = 2, 
+      col.names = c(
+        "Team", 
+        "Rank", 
+        "Wins", 
+        "Losses", 
+        "Points For",
+        "Points Against"
+      )
+    ) %>% 
+    cat(sep = "\n")
+  cat("\n")
 }
 ```
-
-### 2018
-
-```{r standings_2018, echo=FALSE}
-record %>% 
-  filter(year == 2018) %>% 
-  select(-year) %>% 
-  arrange(rank) %>% 
-  kable(
-    digits = 2, 
-    col.names = c("Team", 
-                  "Rank", 
-                  "Wins", 
-                  "Losses", 
-                  "Points For",
-                  "Points Against")
-  )
-```
-
-### 2017
-
-```{r standings_2017, echo=FALSE}
-record %>% 
-  filter(year == 2017) %>% 
-  select(-year) %>%  
-  arrange(rank) %>% 
-  kable(
-    digits = 2, 
-    col.names = c("Team", 
-                  "Rank", 
-                  "Wins", 
-                  "Losses", 
-                  "Points For",
-                  "Points Against")
-  )
-```
-
-### 2016
-
-```{r standings_2016, echo=FALSE}
-record %>% 
-  filter(year == 2016) %>% 
-  select(-year) %>%  
-  arrange(rank) %>% 
-  kable(
-    digits = 2, 
-    col.names = c("Team", 
-                  "Rank", 
-                  "Wins", 
-                  "Losses", 
-                  "Points For",
-                  "Points Against")
-  )
-```
-
-### 2015
-
-```{r standings_2015, echo=FALSE}
-record %>% 
-  filter(year == 2015) %>% 
-  select(-year) %>% 
-  arrange(rank) %>% 
-  kable(
-    digits = 2, 
-    col.names = c("Team", 
-                  "Rank", 
-                  "Wins", 
-                  "Losses", 
-                  "Points For",
-                  "Points Against")
-  )
-```
-
