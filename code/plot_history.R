@@ -1,9 +1,16 @@
+library(fflr)
+library(tidyverse)
+
+teams <- league_teams(252353)
+matchups <- weekly_matchups(252353)
+matchups <- left_join(matchups, teams[, 1:2])
 matchups %>% 
   filter(as.integer(week) < 13) %>% 
-  group_by(id) %>% 
-  summarise(wins = mean(winner, na.rm = )) %>% 
-  ggplot(aes(x = reorder(id, wins), y = wins)) + 
-  geom_col(aes(fill = id)) + scale_fill_fantasy() +
+  group_by(abbrev) %>% 
+  summarise(wins = mean(winner, na.rm = TRUE)) %>% 
+  ggplot(aes(x = reorder(abbrev, wins), y = wins)) + 
+  geom_col(aes(fill = abbrev)) +
+  scale_fill_brewer(palette = "Dark2") +
   theme(legend.position = "none") + 
   scale_y_continuous(label = scales::percent) + 
   labs(
@@ -21,13 +28,13 @@ ggsave(
 )
 
 matchups %>% 
-  filter(as.integer(week) < 13) %>% 
-  group_by(id) %>% 
-  summarise(mean = mean(score, na.rm = )) %>% 
-  ggplot(aes(x = reorder(id, mean), y = mean)) + 
-  geom_col(aes(fill = id)) + scale_fill_fantasy() +
+  filter(as.integer(week) < 13, score > 0) %>% 
+  group_by(abbrev) %>% 
+  summarise(mean = mean(score, na.rm = TRUE)) %>% 
+  ggplot(aes(x = reorder(abbrev, mean), y = mean)) + 
+  geom_col(aes(fill = abbrev)) +
+  scale_fill_brewer(palette = "Dark2") +
   theme(legend.position = "none") + 
-  coord_cartesian(ylim = c(80, 110)) +
   labs(
     title = "Mean Score by Team",
     subtitle = "Scoring and number of teams changing year to year",
