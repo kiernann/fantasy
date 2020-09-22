@@ -1,34 +1,33 @@
 # Kiernan Nicholls
-# Tue Nov  5 13:26:36 2019
+# Tue Sep 15 21:19:14 2020 ------------------------------
 
-# get coaching data --------------------------------------------------------------------------
+library(tidyverse)
+library(ggrepel)
+library(fflr)
 
-roster_data <- fantasy_roster(gaa, scoringPeriodId = 9)
-rosters <- map(roster_data$teams, form_roster)
+# get coaching data -----------------------------------------------------------
+
+w <- 2
+rosters <- team_roster(252353, week = w)
 best <- map(rosters, best_roster)
 
 actual_scores <- map_dbl(rosters, roster_score)
 best_scores <- map_dbl(best, roster_score)
 
-tran_data <- transpose(roster_data$teams)
+teams <- league_teams(252353)
 
 coaching <- tibble(
-  week = 8,
-  abbrev = unlist(tran_data$abbrev),
-  best = best_scores,
+  week = w,
+  abbrev = teams$abbrev,
+  best = best_scores
 )
 
-# get matchup data ---------------------------------------------------------------------------
+# get matchup data ------------------------------------------------------------
 
-teams <- fantasy_members(gaa) %>%
-  form_teams() %>%
-  select(id, abbrev)
-
-match_data <- fantasy_matchup(gaa, scoringPeriodId = 9)
-matchups <- match_data$schedule %>%
-  map_dfr(form_matchup) %>%
-  filter(week == 9) %>%
-  left_join(teams) %>%
+matchups <- weekly_matchups(252353)
+matchups <- matchups %>%
+  filter(week == w) %>%
+  left_join(teams[, 1:2]) %>%
   mutate(week = as.numeric(week))
 
 diff <-
@@ -47,7 +46,7 @@ x <- diff %>%
   )
 
 x <- diff %>%
-  group_by(game) %>%
+  group_by(id) %>%
   mutate(total = sum(score)) %>%
   ungroup() %>%
   mutate(
@@ -68,12 +67,16 @@ x %>%
   geom_label(aes(label = abbrev, fill = abbrev, size = diff_diff))
 
 x %>%
-  mutate(game = as.character(game)) %>%
+  mutate(
+    id = as.character(id),
+    coulda = ideal_diff > 0
+  ) %>%
   ggplot(aes(x = real_diff, y = ideal_diff)) +
   geom_label(
     label.size = 0,
     alpha = 0,
     size = 12,
+    color = "grey30",
     mapping = aes(
       label = "Coulda Won",
       x = -60,
@@ -84,6 +87,7 @@ x %>%
     label.size = 0,
     alpha = 0,
     size = 12,
+    color = "grey30",
     mapping = aes(
       label = "No Chance",
       x = -60,
@@ -94,6 +98,7 @@ x %>%
     label.size = 0,
     alpha = 0,
     size = 12,
+    color = "grey30",
     mapping = aes(
       label = "Did Win",
       x = 60,
@@ -105,19 +110,24 @@ x %>%
   geom_vline(xintercept = 0) +
   geom_hline(yintercept = 0) +
   coord_cartesian(xlim = c(-100, 100), ylim = c(-100, 100)) +
-  geom_line(aes(group = game), size = 1) +
+  # geom_line(aes(group = id), size = 1) +
   geom_abline(slope = 1, intercept = 0, linetype = 2) +
-  geom_label(aes(shape = game, fill = abbrev, label = abbrev), size = 7) +
-  scale_linetype(guide = FALSE) +
+  geom_point(aes(color = coulda), size = 2) +
+  geom_label_repel(
+    segment.size = 1,
+    mapping = aes(fill = abbrev, label = abbrev),
+    size = 7
+  ) +
+  scale_color_manual(values = c("red", "black"), guide = FALSE)
+scale_linetype(guide = FALSE) +
   labs(
-    title = "Real Scores vs Best Scores",
-    subtitle = "Week 9",
+    title = paste("Best Roster Potential", sprintf("Week %s", w), sep = ": "),
     x = "Real Matchup Difference",
     y = "Ideal Score Difference"
   )
 
 ggsave(
-  "~/Pictures/diff_plot.png",
+  "~/Pictures/diff_plot2.png",
   height = 7,
   width = 8,
   dpi = "retina"
