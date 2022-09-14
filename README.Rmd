@@ -21,72 +21,93 @@ knitr::opts_chunk$set(
 
 # GAA
 
-This is the repository for the Gambling Addicts Annonymous fantasy football league.
+This is the repository for the GAA fantasy football league.
 
-## Current teams
-
-* AGUS [Comish.]
-* BILL
-* CART *(Griz)*
-* KIER [LM] *(Champ)*
-* KYLE
-* NICK
-* PEPE
-* CORY
-* ~~COLN~~
-* ~~GRIZ~~
-* ~~CHAR~~
-* ~~ROWN~~
-
-```{r print_records}
+```{r libs}
 library(tidyverse)
-library(magrittr)
 library(knitr)
 library(fflr)
-years <- 2015:2018
-record <- rep(list(NA), length(years))
-for (i in seq_along(years)) {
-  cat("##", years[i], "\n")
-  data <- ff_data(252353, view = "roster", seasonId = years[i], current = FALSE)
-  data <- data[[1]]
-  teams <- select(map_dfr(data$members, as_tibble), id, firstName)
-  data %>% 
-    use_series(teams) %>% 
-    transpose() %>% 
-    use_series(record) %>% 
-    transpose() %>% 
-    use_series(overall) %>% 
-    map_df(as_tibble) %>% 
-    mutate(
-      id = as_vector(transpose(data$teams)$primaryOwner),
-      rank = as_vector(transpose(data$teams)$rankCalculatedFinal)
-    ) %>% 
-    group_by(id) %>% 
-    arrange(desc(wins)) %>% 
-    slice(1) %>% 
-    ungroup() %>% 
-    left_join(teams) %>% 
+library(k5)
+```
+
+```{r api}
+dat <- league_standings(leagueId = "252353", leagueHistory = TRUE)
+scores <- combine_history(leagueId = "252353", tidy_scores, useMatchup = FALSE)
+```
+
+```{r expected}
+scores <- scores %>% 
+  select(-abbrev) %>% 
+  left_join(gaa, by = c("seasonId", "teamId"))
+
+expect <- scores %>% 
+  group_by(seasonId, abbrev) %>% 
+  summarise(expectedWins = round(sum(expectedWins), 1))
+```
+
+## Standings
+
+```{r format, results='asis'}
+out <- rep(list(NA), length(dat))
+for (i in rev(seq_along(dat))) {
+  yr <- unique(dat[[i]]$seasonId)
+  cat(paste("\n###", yr, "\n\n"))
+  
+  dat[[i]] <- dat[[i]] %>% 
+    select(-abbrev) %>% 
+    left_join(gaa, by = c("seasonId", "teamId")) %>% 
+    left_join(expect, by = c("seasonId", "abbrev"))
+  
+  out[[i]] <- dat[[i]] %>% 
     select(
-      firstName,
-      rank,
-      wins, 
-      losses, 
-      pointsFor, 
-      pointsAgainst
+      final = rankCalculatedFinal, 
+      team = abbrev, 
+      wins = wins,
+      expected = expectedWins,
+      points = pointsFor
     ) %>% 
-    arrange(rank) %>% 
-    kable(
-      digits = 2, 
-      col.names = c(
-        "Team", 
-        "Rank", 
-        "Wins", 
-        "Losses", 
-        "Points For",
-        "Points Against"
-      )
-    ) %>% 
-    cat(sep = "\n")
-  cat("\n")
+    arrange(final) %>% 
+    mutate(across(final, ~paste0("#", .))) %>% 
+    rename_with(str_to_title)
+  
+  cat(
+    kable(out[[i]]),
+    sep = "\n"
+  )
 }
 ```
+
+## Wins
+
+```{r plots, fig.height=5, fig.width=10}
+for (i in rev(seq_along(dat))) {
+  yr <- unique(dat[[i]]$seasonId)
+  win_plot <- scores %>% 
+    filter(seasonId == yr) %>% 
+    mutate(across(scoringPeriodId, as.factor)) %>% 
+    ggplot(
+      mapping = aes(
+        x = reorder(abbrev, expectedWins),
+        y = expectedWins,
+        fill = scoringPeriodId
+      )
+    ) +
+    geom_col(color = "black") +
+    coord_flip() +
+    scale_y_continuous(breaks = 1:12) +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      text = element_text(family = "Ubuntu mono", size = 14),
+      axis.title.x = element_text(margin = margin(t = 10)),
+      axis.title.y = element_text(margin = margin(r = 10))
+    ) +
+    labs(
+      title = yr,
+      x = "Team",
+      y = "Expected Wins"
+    )
+  print(win_plot)
+}
+```
+
