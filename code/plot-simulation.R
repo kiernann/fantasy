@@ -1,4 +1,5 @@
 library(tidyverse)
+library(scales)
 library(fflr)
 
 x <- league_simulation()
@@ -12,7 +13,7 @@ x %>%
   geom_vline(xintercept = 4.5, linetype = 2) + 
   labs(x = NULL, y = NULL, title = "Playoff Odds", subtitle = Sys.Date()) + 
   scale_y_continuous(labels = scales::label_percent()) + 
-  coord_cartesian(ylim = c(0, 0.7)) + 
+  coord_cartesian(ylim = c(0, 0.75)) + 
   geom_text(aes(label = lbl_odds), nudge_y = 0.02, size = 3) +
   theme(
     axis.title.x = element_text(margin = margin(t = 10)),
@@ -34,4 +35,4 @@ x %>%
     )
   )
 
-ggsave("~/Pictures/playoff_odds.png", height = 7, width = 5, dpi = 320)
+ggsave("plots/playoff_odds.png", height = 7, width = 5, dpi = 320)

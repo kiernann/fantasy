@@ -22,8 +22,12 @@ theme_gaa <- function(dat) {
 
 x %>% 
   mutate(
-    across(scoringPeriodId, as.factor),
-    lbl = as.character(round(points))
+    scoringPeriodId = fct_rev(as.factor(scoringPeriodId))
+  ) %>% 
+  group_by(abbrev) %>% 
+  mutate(
+    lbl_y = cumsum(points),
+    lbl_txt = round(points)
   ) %>% 
   ggplot(
     aes(
@@ -37,13 +41,15 @@ x %>%
   ) +
   geom_text(
     mapping = aes(
-      label = lbl
+      y = lbl_y,
+      label = lbl_txt
     ),
-    nudge_y = -3
+    nudge_y = -4.5
   ) +
   coord_flip() +
   scale_fill_brewer(
-    palette = "Dark2"
+    palette = "Dark2",
+    direction = -1
   ) +
   theme_gaa() +
   labs(
@@ -51,7 +57,8 @@ x %>%
     x = "Team",
     y = "Points",
     fill = "Week"
-  )
+  ) +
+  guides(fill = guide_legend(nrow = 1, reverse = TRUE))
 
 ggsave(
   filename = sprintf("plots/scores-week_%s.png", Sys.Date()),
@@ -66,8 +73,12 @@ ggsave(
 
 x %>% 
   mutate(
-    across(scoringPeriodId, as.factor),
-    lbl = ifelse(
+    scoringPeriodId = fct_rev(as.factor(scoringPeriodId))
+  ) %>% 
+  group_by(abbrev) %>% 
+  mutate(
+    lbl_y = cumsum(expectedWins),
+    lbl_txt = ifelse(
       test = expectedWins > 0,
       yes = as.character(round(expectedWins, 2)),
       no = ""
@@ -85,11 +96,12 @@ x %>%
   ) +
   geom_text(
     mapping = aes(
-      label = lbl
+      y = lbl_y,
+      label = lbl_txt
     ),
-    nudge_y = -0.03
+    nudge_y = -0.04
   ) +
-  coord_flip(ylim = c(0, 1)) +
+  coord_flip(ylim = c(0, 1.7)) +
   scale_fill_brewer(
     palette = "Dark2",
     direction = -1,
@@ -100,7 +112,8 @@ x %>%
     x = "Team",
     y = "Expected Wins",
     fill = "Week"
-  )
+  ) +
+  guides(fill = guide_legend(nrow = 1, reverse = TRUE))
 
 ggsave(
   filename = sprintf("plots/wins-week_%s.png", Sys.Date()),
