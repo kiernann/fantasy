@@ -13,7 +13,7 @@ x %>%
   geom_vline(xintercept = 4.5, linetype = 2) + 
   labs(x = NULL, y = NULL, title = "Playoff Odds", subtitle = Sys.Date()) + 
   scale_y_continuous(labels = scales::label_percent()) + 
-  coord_cartesian(ylim = c(0, 0.75)) + 
+  coord_cartesian(ylim = c(0, 0.8)) + 
   geom_text(aes(label = lbl_odds), nudge_y = 0.02, size = 3) +
   theme(
     axis.title.x = element_text(margin = margin(t = 10)),

@@ -44,7 +44,8 @@ x %>%
       y = lbl_y,
       label = lbl_txt
     ),
-    nudge_y = -4.5
+    size = 4,
+    nudge_y = -10
   ) +
   coord_flip() +
   scale_fill_brewer(
@@ -62,8 +63,8 @@ x %>%
 
 ggsave(
   filename = sprintf("plots/scores-week_%s.png", Sys.Date()),
-  height = 5,
-  width = 10,
+  height = 6,
+  width = 12,
   dpi = 300
 )
 
@@ -80,7 +81,7 @@ x %>%
     lbl_y = cumsum(expectedWins),
     lbl_txt = ifelse(
       test = expectedWins > 0,
-      yes = as.character(round(expectedWins, 2)),
+      yes = str_remove(as.character(round(expectedWins, 2)), "^0"),
       no = ""
     )
   ) %>% 
@@ -99,9 +100,10 @@ x %>%
       y = lbl_y,
       label = lbl_txt
     ),
-    nudge_y = -0.04
+    size = 4,
+    nudge_y = -0.05
   ) +
-  coord_flip(ylim = c(0, 1.7)) +
+  scale_y_continuous(n.breaks = 8) +
   scale_fill_brewer(
     palette = "Dark2",
     direction = -1,
@@ -117,7 +119,7 @@ x %>%
 
 ggsave(
   filename = sprintf("plots/wins-week_%s.png", Sys.Date()),
-  height = 5,
-  width = 10,
+  height = 6,
+  width = 12,
   dpi = 300
 )
